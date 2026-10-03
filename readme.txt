@@ -1,20 +1,20 @@
 === Elementor Helper Kit ===
 Contributors: sajad
-Tags: elementor, json, editor, animation, transition, reduced motion, prefers-reduced-motion, css, stylesheet
+Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 
-A development helper kit for Elementor sites.
+A development and administration helper kit for Elementor sites with native public-GitHub updates.
 
 == Features ==
 
 1. Elementor JSON Editor
 - Adds "ویرایش JSON المنتور" to Elementor-built posts/pages.
 - Opens _elementor_data in WordPress CodeMirror.
-- Validates JSON before saving.
-- Keeps up to 5 backups.
+- Supports formatting, minifying, Ctrl/Cmd+S saving, and JSON validation.
+- Keeps up to 5 backups using the existing _eje_backups meta key.
 - Clears relevant Elementor cache data after saving.
 
 2. Animation Effect / Full Motion override
@@ -26,8 +26,8 @@ A development helper kit for Elementor sites.
 - Does not modify Elementor core files.
 
 3. Elementor CSS Priority
-- Enabled by default, including upgrades from older Elementor Helper Kit versions where this setting does not exist yet.
-- Moves Elementor's base frontend stylesheet (frontend.min.css / elementor-frontend) before the active theme styles at print time.
+- Enabled by default.
+- Moves Elementor's base frontend stylesheet (frontend.min.css / elementor-frontend) before active-theme styles at print time.
 - Lets later theme CSS win when selectors have equal specificity.
 - Does not edit Elementor or theme files.
 - When disabled, WordPress/Elementor keep their normal stylesheet order.
@@ -45,11 +45,20 @@ A development helper kit for Elementor sites.
 - Uses a WordPress nonce and capability check.
 - Can be hidden from Settings > Elementor Helper Kit.
 
+6. Native GitHub Updates
+- Uses the WordPress Update URI mechanism.
+- Reads the remote Version header from elementor-helper-kit.php on the public GitHub main branch.
+- Shows the normal WordPress plugin update when the GitHub version is newer.
+- Downloads the update ZIP directly from the public repository.
+- Normalizes the extracted GitHub archive folder back to elementor-helper-kit.
+- Does not require a GitHub token while the repository is public.
+- Compatible with WordPress' normal Enable auto-updates option.
+
 == Settings ==
 
 Go to Settings > Elementor Helper Kit.
 
-Animation Effect ON:
+Animation Effect ON (default):
 The plugin attempts to ignore the operating system Reduced Motion preference on the public site.
 
 Animation Effect OFF:
@@ -73,6 +82,16 @@ Shows a quick Elementor Cache action in the top wp-admin toolbar.
 Elementor Cache Toolbar Button OFF:
 Hides only the helper shortcut; Elementor's own Tools page remains unchanged.
 
+== Publishing updates ==
+
+The updater tracks the public GitHub main branch. To publish an update:
+1. Increase Version in the plugin header.
+2. Increase EHK_VERSION to exactly the same version.
+3. Update Stable tag in this readme and add the changelog entry.
+4. Commit/push the ready-to-install version to main.
+
+No GitHub Release, tag, or token is required while the repository remains public.
+
 == CSS cascade note ==
 
 Loading the theme stylesheet later resolves conflicts when CSS specificity is equal. A more specific Elementor selector or an Elementor declaration using !important can still override a less-specific theme rule and should be handled in the theme CSS itself.
@@ -95,14 +114,11 @@ After installing Elementor Helper Kit, deactivate the old standalone "Elementor 
 
 == Changelog ==
 
-= 1.2.0 =
-- Added a default-on frontend Admin Bar switch using show_admin_bar( false ).
-- Added a default-on Elementor Cache shortcut to the wp-admin toolbar.
-- Added secure cache clearing with capability and nonce checks.
-
-= 1.1.0 =
-- Added the default-on Elementor CSS Priority option.
-- Reorders Elementor frontend.min.css ahead of active-theme styles without editing core/theme files.
-
 = 1.0.0 =
-- Initial combined release.
+- Initial public release of the combined Elementor Helper Kit.
+- Elementor JSON editor with validation, backups, formatting/minifying, and cache clearing.
+- Default-on Full Motion override.
+- Default-on Elementor CSS Priority option.
+- Default-on frontend Admin Bar switch.
+- Default-on Elementor Cache shortcut in the wp-admin toolbar.
+- Added native WordPress update checks and package downloads from the public GitHub main branch.
