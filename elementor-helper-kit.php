@@ -1,7 +1,9 @@
 <?php
 /**
  * Plugin Name: Elementor Helper Kit
- * Description: Elementor development helpers: JSON editing, motion/CSS controls, frontend admin-bar control, and a quick Elementor cache action in wp-admin.
+ * Plugin URI: https://github.com/Cajadfa/elementor-helper-kit
+ * Update URI: https://github.com/Cajadfa/elementor-helper-kit
+ * Description: Elementor development helpers: JSON editing, motion/CSS controls, frontend admin-bar control, a quick Elementor cache action, and GitHub updates.
  * Version: 1.0.0
  * Author: Sajad Pedar
  * Author URI: http://wwwc.qoqnooos.ir
@@ -25,6 +27,7 @@ require_once EHK_DIR . 'includes/class-ehk-motion.php';
 require_once EHK_DIR . 'includes/class-ehk-style-priority.php';
 require_once EHK_DIR . 'includes/class-ehk-json-editor.php';
 require_once EHK_DIR . 'includes/class-ehk-admin-tools.php';
+require_once EHK_DIR . 'includes/class-ehk-updater.php';
 
 register_activation_hook( __FILE__, array( 'EHK_Settings', 'activate' ) );
 
@@ -34,6 +37,7 @@ add_action( 'plugins_loaded', function () {
 	EHK_Style_Priority::init();
 	EHK_JSON_Editor::init();
 	EHK_Admin_Tools::init();
+	EHK_Updater::init();
 } );
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), function ( $links ) {
