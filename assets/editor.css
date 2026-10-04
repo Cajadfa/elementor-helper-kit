@@ -1,0 +1,6 @@
+.ehk-json-wrap .ehk-json-toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.ehk-json-wrap .CodeMirror{direction:ltr;text-align:left;border:1px solid #c3c4c7;font-size:13px}
+#ehk-json-status{font-weight:600;margin-inline-start:8px}
+#ehk-json-status.ok{color:#008a20}
+#ehk-json-status.err{color:#d63638}
+#ehk-json-status.warn{color:#dba617}
