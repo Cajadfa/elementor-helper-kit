@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.0.0`  
+**Current version:** `1.1.0`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -66,7 +66,18 @@ Enabled by default.
 - Protected by a WordPress nonce and capability check.
 - Can be hidden from **Settings > Elementor Helper Kit**.
 
-### 6. Native GitHub Updates
+### 6. WooCommerce Minimal Styles
+
+Disabled by default, including when upgrading an existing installation.
+
+- Loads a small RTL-friendly stylesheet for **classic WooCommerce** PHP templates and shortcodes.
+- When enabled and WooCommerce is active, replaces the three classic WooCommerce core stylesheets with `assets/css/woocommerce-minimal.css`.
+- Loads CSS globally on the frontend to support product shortcodes and widgets on non-shop pages.
+- Toggling OFF restores default WooCommerce styling; no extra JavaScript or template overrides.
+- Cart/Checkout **Blocks** and third-party extension styles are not replaced.
+- Has no effect if WooCommerce is disabled or the bundled CSS is unreadable.
+
+### 7. Native GitHub Updates
 
 - Uses WordPress' native **Update URI** system.
 - Checks the `Version:` header of `elementor-helper-kit.php` on the public GitHub `main` branch.
@@ -90,6 +101,7 @@ The following switches are enabled by default:
 | Elementor CSS Priority | ON | Prints Elementor base CSS before active-theme CSS |
 | Hide Frontend Admin Bar | ON | Hides the frontend WordPress toolbar |
 | Elementor Cache Toolbar Button | ON | Adds the quick cache action to the wp-admin toolbar |
+| WooCommerce Minimal Styles | **OFF** | Optional minimal classic WooCommerce CSS |
 
 The Elementor JSON Editor is always available for posts/pages that contain Elementor data.
 
