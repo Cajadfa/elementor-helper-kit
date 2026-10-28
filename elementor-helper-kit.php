@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/Cajadfa/elementor-helper-kit
  * Update URI: https://github.com/Cajadfa/elementor-helper-kit
  * Description: Elementor development helpers: JSON editing, motion/CSS controls, frontend admin-bar control, a quick Elementor cache action, and GitHub updates.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Sajad Pedar
  * Author URI: http://wwwc.qoqnooos.ir
  * License: GPL-2.0-or-later
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EHK_VERSION', '1.0.0' );
+define( 'EHK_VERSION', '1.1.0' );
 define( 'EHK_FILE', __FILE__ );
 define( 'EHK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'EHK_URL', plugin_dir_url( __FILE__ ) );
@@ -25,6 +25,7 @@ define( 'EHK_URL', plugin_dir_url( __FILE__ ) );
 require_once EHK_DIR . 'includes/class-ehk-settings.php';
 require_once EHK_DIR . 'includes/class-ehk-motion.php';
 require_once EHK_DIR . 'includes/class-ehk-style-priority.php';
+require_once EHK_DIR . 'includes/class-ehk-woocommerce-styles.php';
 require_once EHK_DIR . 'includes/class-ehk-json-editor.php';
 require_once EHK_DIR . 'includes/class-ehk-admin-tools.php';
 require_once EHK_DIR . 'includes/class-ehk-updater.php';
@@ -35,6 +36,7 @@ add_action( 'plugins_loaded', function () {
 	EHK_Settings::init();
 	EHK_Motion::init();
 	EHK_Style_Priority::init();
+	EHK_WooCommerce_Styles::init();
 	EHK_JSON_Editor::init();
 	EHK_Admin_Tools::init();
 	EHK_Updater::init();
