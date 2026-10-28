@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -45,7 +45,13 @@ A development and administration helper kit for Elementor sites with native publ
 - Uses a WordPress nonce and capability check.
 - Can be hidden from Settings > Elementor Helper Kit.
 
-6. Native GitHub Updates
+6. WooCommerce Minimal Styles
+- Disabled by default, including after upgrades.
+- Loads a minimal, RTL-friendly stylesheet for classic WooCommerce templates and shortcodes.
+- Replaces WooCommerce's three classic default styles only while enabled.
+- Does not alter Cart/Checkout Block styles or third-party plugin CSS.
+
+7. Native GitHub Updates
 - Uses the WordPress Update URI mechanism.
 - Reads the remote Version header from elementor-helper-kit.php on the public GitHub main branch.
 - Shows the normal WordPress plugin update when the GitHub version is newer.
@@ -82,6 +88,12 @@ Shows a quick Elementor Cache action in the top wp-admin toolbar.
 Elementor Cache Toolbar Button OFF:
 Hides only the helper shortcut; Elementor's own Tools page remains unchanged.
 
+WooCommerce Minimal Styles OFF (default):
+The helper does not load or remove WooCommerce styles.
+
+WooCommerce Minimal Styles ON:
+When WooCommerce is active, loads the minimal classic stylesheet and replaces the classic WooCommerce default CSS. Cart/Checkout Blocks retain their own CSS.
+
 == Publishing updates ==
 
 The updater tracks the public GitHub main branch. To publish an update:
@@ -113,6 +125,10 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.0 =
+- Added default-off WooCommerce Minimal Styles toggle and bundled classic CSS.
+- Preserved Cart/Checkout Block and third-party extension styling.
 
 = 1.0.0 =
 - Initial public release of the combined Elementor Helper Kit.
