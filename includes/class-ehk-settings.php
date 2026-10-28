@@ -19,6 +19,7 @@ class EHK_Settings {
 			'elementor_css_first'       => 1,
 			'hide_frontend_admin_bar'   => 1,
 			'elementor_cache_toolbar'   => 1,
+			'woocommerce_minimal_styles' => 0,
 		);
 
 		$settings = get_option( self::OPTION, false );
@@ -57,6 +58,10 @@ class EHK_Settings {
 		return (bool) self::get( 'elementor_cache_toolbar', 1 );
 	}
 
+	public static function woocommerce_minimal_styles_enabled() {
+		return (bool) self::get( 'woocommerce_minimal_styles', 0 );
+	}
+
 	public static function register_menu() {
 		add_options_page(
 			__( 'Elementor Helper Kit', 'elementor-helper-kit' ),
@@ -79,6 +84,7 @@ class EHK_Settings {
 					'elementor_css_first'     => 1,
 					'hide_frontend_admin_bar' => 1,
 					'elementor_cache_toolbar' => 1,
+					'woocommerce_minimal_styles' => 0,
 				),
 			)
 		);
@@ -92,6 +98,7 @@ class EHK_Settings {
 			'elementor_css_first'     => empty( $input['elementor_css_first'] ) ? 0 : 1,
 			'hide_frontend_admin_bar' => empty( $input['hide_frontend_admin_bar'] ) ? 0 : 1,
 			'elementor_cache_toolbar' => empty( $input['elementor_cache_toolbar'] ) ? 0 : 1,
+			'woocommerce_minimal_styles' => empty( $input['woocommerce_minimal_styles'] ) ? 0 : 1,
 		);
 	}
 
@@ -104,6 +111,7 @@ class EHK_Settings {
 		$css_priority_enabled        = self::elementor_css_first_enabled();
 		$hide_admin_bar_enabled      = self::hide_frontend_admin_bar_enabled();
 		$cache_toolbar_enabled       = self::elementor_cache_toolbar_enabled();
+		$woocommerce_minimal_enabled = self::woocommerce_minimal_styles_enabled();
 		?>
 		<div class="wrap ehk-settings-wrap">
 			<h1><?php echo esc_html__( 'Elementor Helper Kit', 'elementor-helper-kit' ); ?></h1>
@@ -199,6 +207,29 @@ class EHK_Settings {
 					<p class="ehk-note">
 						<strong>روشن (پیش‌فرض):</strong> در wp-admin یک میانبر مستقیم برای پاک‌کردن فایل‌ها و دیتای کش Elementor نمایش داده می‌شود.<br>
 						<strong>خاموش:</strong> میانبر از Toolbar مخفی می‌شود؛ خود ابزار Elementor تغییری نمی‌کند.
+					</p>
+				</div>
+
+				<div class="ehk-card">
+					<div class="ehk-card-head">
+						<div>
+							<h2>WooCommerce Minimal Styles</h2>
+							<p>استایل پایه و مینیمال ووکامرس کلاسیک، بدون جاوااسکریپت اضافی یا تغییر قالب.</p>
+						</div>
+						<label class="ehk-switch">
+							<input
+								type="checkbox"
+								name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_minimal_styles]"
+								value="1"
+								<?php checked( $woocommerce_minimal_enabled ); ?>
+							/>
+							<span class="ehk-slider" aria-hidden="true"></span>
+						</label>
+					</div>
+					<p class="ehk-note">
+						<strong>روشن:</strong> با فعال بودن WooCommerce، استایل مینیمال بارگذاری و سه استایل کلاسیک پیش‌فرض ووکامرس جایگزین می‌شوند.<br>
+						<strong>خاموش (پیش‌فرض):</strong> افزونه هیچ تغییری در استایل‌های ووکامرس نمی‌دهد.<br>
+						<strong>توجه:</strong> این گزینه مخصوص خروجی کلاسیک و شورت‌کدهای ووکامرس است و Cart/Checkout بلاکی یا CSS افزونه‌های جانبی را تغییر نمی‌دهد.
 					</p>
 				</div>
 
