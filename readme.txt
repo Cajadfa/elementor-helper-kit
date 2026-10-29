@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.12
+Stable tag: 1.1.13
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,11 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.13 =
+- Remove the actual 2px active-tab border in classic single-product WooCommerce tabs (text-decoration alone was insufficient).
+- Prevent theme-provided link borders/underlines and pseudo-element rules from restoring active tab underlines, while preserving active tab typography.
+- Remove text underlines and bottom borders from the cart item remove (×) link in normal, hover and focus states without changing removal behavior.
 
 = 1.1.12 =
 - Make the primary classic single-product Add to Cart button full-width beneath quantity controls, matching the established 64px checkout CTA and supporting variation purchase forms.
