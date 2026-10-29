@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.13`  
+**Current version:** `1.1.14`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -87,6 +87,7 @@ Disabled by default, including when upgrading an existing installation.
 - Optional address-line and custom Checkout inputs with visually hidden WooCommerce labels now receive matching material floating labels, and non-enhanced text/select fields retain the 58px height.
 - Classic single-product pages: the buy button fills the summary width under the quantity control, WooCommerce tab links have neither underlines nor active-tab bottom borders, review stars render as accessible clickable glyphs without extra icon fonts, and the review-submit button is comfortably sized.
 - Classic cart remove links (×) have no text decoration or theme-provided bottom border.
+- Success notices vertically center their message alongside the View Cart action, single-product Add to Cart shows a lightweight shopping bag icon, and the optional **Custom Add to Cart Button Text** setting (default off) replaces only the native single-product label via a WooCommerce filter.
 - Classic Cart Proceed to Checkout CTA uses the same prominent sizing as the Checkout Place Order button.
 - Also styles the WooCommerce Cart/Checkout **Blocks** commonly used on pages assigned in **WooCommerce > Settings > Advanced**. Their native styles, floating labels, validation, layouts, and JavaScript remain intact; only visual details are harmonized.
 - The same toggle controls both classic output and the optional Block polish. Third-party extension styles are not replaced.
