@@ -2,10 +2,12 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.14`  
+**Current version:** `1.1.15`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
+
+- Classic WooCommerce shop sorting now uses a compact SVG chevron instead of the browser-native dropdown arrow, with RTL/LTR-aware positioning and a 50px minimal control.
 
 ## Features
 
