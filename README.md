@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.10`  
+**Current version:** `1.1.11`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -84,6 +84,7 @@ Disabled by default, including when upgrading an existing installation.
 - Classic Checkout order review: review table and payment box stretch to the same sidebar width, and SelectWoo uses centered, RTL-safe dropdown chevrons.
 - Classic Checkout finishing details: clearer floating-label/value separation in Select2 and native dropdowns, zero top margin on billing headings, compact error messages for invalid coupons, and extra space beneath the expanded coupon form.
 - RTL SelectWoo selected values: remove unwanted right padding while keeping left-side space for the dropdown arrow, without changing LTR styling.
+- Optional address-line and custom Checkout inputs with visually hidden WooCommerce labels now receive matching material floating labels, and non-enhanced text/select fields retain the 58px height.
 - Classic Cart Proceed to Checkout CTA uses the same prominent sizing as the Checkout Place Order button.
 - Also styles the WooCommerce Cart/Checkout **Blocks** commonly used on pages assigned in **WooCommerce > Settings > Advanced**. Their native styles, floating labels, validation, layouts, and JavaScript remain intact; only visual details are harmonized.
 - The same toggle controls both classic output and the optional Block polish. Third-party extension styles are not replaced.
