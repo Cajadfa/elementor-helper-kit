@@ -23,6 +23,7 @@ class EHK_Settings {
 			'elementor_cache_toolbar'   => 1,
 			'woocommerce_minimal_styles' => 0,
 			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
+			'woocommerce_color_mode'   => 'light',
 		);
 
 		$settings = get_option( self::OPTION, false );
@@ -63,6 +64,10 @@ class EHK_Settings {
 
 	public static function woocommerce_minimal_styles_enabled() {
 		return (bool) self::get( 'woocommerce_minimal_styles', 0 );
+	}
+
+	public static function woocommerce_color_mode() {
+		return 'dark' === self::get( 'woocommerce_color_mode', 'light' ) ? 'dark' : 'light';
 	}
 
 	public static function woocommerce_primary_color() {
@@ -112,7 +117,8 @@ class EHK_Settings {
 					'hide_frontend_admin_bar' => 1,
 					'elementor_cache_toolbar' => 1,
 					'woocommerce_minimal_styles' => 0,
-			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
+					'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
+					'woocommerce_color_mode' => 'light',
 				),
 			)
 		);
@@ -128,6 +134,7 @@ class EHK_Settings {
 			'elementor_cache_toolbar' => empty( $input['elementor_cache_toolbar'] ) ? 0 : 1,
 			'woocommerce_minimal_styles' => empty( $input['woocommerce_minimal_styles'] ) ? 0 : 1,
 			'woocommerce_primary_color' => self::normalize_primary_color( isset( $input['woocommerce_primary_color'] ) ? $input['woocommerce_primary_color'] : self::woocommerce_primary_color() ),
+			'woocommerce_color_mode' => isset( $input['woocommerce_color_mode'] ) && 'dark' === $input['woocommerce_color_mode'] ? 'dark' : 'light',
 		);
 	}
 
@@ -142,6 +149,7 @@ class EHK_Settings {
 		$cache_toolbar_enabled       = self::elementor_cache_toolbar_enabled();
 		$woocommerce_minimal_enabled = self::woocommerce_minimal_styles_enabled();
 		$woocommerce_primary_color   = self::woocommerce_primary_color();
+		$woocommerce_color_mode      = self::woocommerce_color_mode();
 		?>
 		<div class="wrap ehk-settings-wrap">
 			<h1><?php echo esc_html__( 'Elementor Helper Kit', 'elementor-helper-kit' ); ?></h1>
@@ -262,6 +270,7 @@ class EHK_Settings {
 						<strong>توجه:</strong> برای خروجی کلاسیک استایل‌های پایه جایگزین می‌شوند؛ سبد خرید و تسویه‌حساب بلاکی نیز ظاهر هماهنگ می‌گیرند، ولی استایل‌ها و رفتار اصلی Blocks و افزونه‌های جانبی حفظ می‌شود.
 					</p>
 					<div class="ehk-color-setting">
+						<div class="ehk-wc-palette-row">
 						<label for="ehk-woocommerce-primary-color"><strong>رنگ پرایمری ووکامرس</strong></label>
 						<input
 							id="ehk-woocommerce-primary-color"
@@ -271,7 +280,15 @@ class EHK_Settings {
 							value="<?php echo esc_attr( $woocommerce_primary_color ); ?>"
 							data-default-color="<?php echo esc_attr( self::DEFAULT_WC_PRIMARY ); ?>"
 						/>
-						<p class="description">رنگ دکمه‌های اصلی، حالت hover و بخش‌های تأکیدی ووکامرس. فقط وقتی WooCommerce Minimal Styles روشن باشد اعمال می‌شود.</p>
+						<div class="ehk-wc-mode-setting">
+							<strong id="ehk-wc-mode-label">پوسته ووکامرس</strong>
+							<div class="ehk-mode-options" role="group" aria-labelledby="ehk-wc-mode-label">
+								<label><input type="radio" name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_color_mode]" value="light" <?php checked( $woocommerce_color_mode, 'light' ); ?> /> روشن</label>
+								<label><input type="radio" name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_color_mode]" value="dark" <?php checked( $woocommerce_color_mode, 'dark' ); ?> /> تیره</label>
+							</div>
+						</div>
+						</div>
+						<p class="description">رنگ اصلی و حالت روشن/تیره فقط برای اجزای WooCommerce Minimal Styles اعمال می‌شوند و به ظاهر کلی قالب دست نمی‌زنند.</p>
 					</div>
 
 				</div>
@@ -295,6 +312,10 @@ class EHK_Settings {
 			.ehk-note{margin:18px 0 0;padding:14px 16px;background:#f6f7f7;border-radius:8px}
 			.ehk-color-setting{margin:18px 0 0;padding:16px;border:1px solid #dcdcde;border-radius:8px;background:#fcfcfd}
 			.ehk-color-setting>label{display:block;margin-bottom:12px}
+			.ehk-wc-palette-row{display:flex;flex-wrap:wrap;align-items:center;gap:28px}
+			.ehk-wc-mode-setting{display:flex;flex-direction:column;gap:10px}
+			.ehk-mode-options{display:flex;align-items:center;gap:14px}
+			.ehk-mode-options label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
 			.ehk-color-setting .description{margin:10px 0 0;color:#646970}
 			.ehk-switch{position:relative;display:inline-block;width:54px;height:30px;flex:0 0 auto}
 			.ehk-switch input{opacity:0;width:0;height:0}
