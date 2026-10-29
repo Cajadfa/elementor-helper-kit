@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.5`  
+**Current version:** `1.1.6`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -76,7 +76,8 @@ Disabled by default, including when upgrading an existing installation.
 - Also reads WooCommerce's configured Shop, Cart, Checkout, My Account and Terms page IDs through `wc_get_page_id()`, and re-enqueues the stylesheet immediately before head styles print if a theme or optimization removed it. This applies to custom pages assigned in WooCommerce settings and their endpoints.
 - Toggling OFF restores default WooCommerce styling; no template overrides or optional quantity script remain active.
 - Provides accessible + / − controls for native classic quantity fields (without altering WooCommerce templates), and Material-style outlined form inputs.
-- Lets administrators pick the WooCommerce primary button color under the same setting; disabled cart actions remain dark and table headings white.
+- Lets administrators pick the WooCommerce primary button color and a separate **Light / Dark WooCommerce UI** mode alongside it. Both are scoped to the optional Woo UI and never change the theme header/footer. Disabled cart actions remain dark and table headings white in light mode.
+- Classic checkout labels float inside native inputs, selects, SelectWoo/Select2 and textareas; fields share a consistent 58px height with a modern chevron for dropdowns. The Place Order button has higher-specificity sizing to withstand typical classic WooCommerce theme overrides.
 - Classic Checkout: material-style floating labels for plain text fields, taller order notes, and bolder primary buttons. Prefilled values and updated-checkout fragments retain the floating state.
 - Classic Cart: the coupon field is hidden here, leaving coupon entry at Checkout only; the Update Cart control is hidden while disabled and reappears after changing quantities.
 - Also styles the WooCommerce Cart/Checkout **Blocks** commonly used on pages assigned in **WooCommerce > Settings > Advanced**. Their native styles, floating labels, validation, layouts, and JavaScript remain intact; only visual details are harmonized.
