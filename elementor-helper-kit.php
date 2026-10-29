@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/Cajadfa/elementor-helper-kit
  * Update URI: https://github.com/Cajadfa/elementor-helper-kit
  * Description: Elementor development helpers: JSON editing, motion/CSS controls, frontend admin-bar control, a quick Elementor cache action, and GitHub updates.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: Sajad Pedar
  * Author URI: http://wwwc.qoqnooos.ir
  * License: GPL-2.0-or-later
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EHK_VERSION', '1.1.2' );
+define( 'EHK_VERSION', '1.1.3' );
 define( 'EHK_FILE', __FILE__ );
 define( 'EHK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'EHK_URL', plugin_dir_url( __FILE__ ) );
