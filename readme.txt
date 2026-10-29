@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -49,7 +49,8 @@ A development and administration helper kit for Elementor sites with native publ
 - Disabled by default, including after upgrades.
 - Loads a minimal, RTL-friendly stylesheet for classic WooCommerce templates and shortcodes.
 - Replaces WooCommerce's three classic default styles only while enabled.
-- Does not alter Cart/Checkout Block styles or third-party plugin CSS.
+- Also adds scoped visual polish to Cart/Checkout Blocks on WooCommerce-assigned pages, while keeping their native layout, behavior, and CSS.
+- Does not modify third-party plugin CSS.
 
 7. Native GitHub Updates
 - Uses the WordPress Update URI mechanism.
@@ -92,7 +93,7 @@ WooCommerce Minimal Styles OFF (default):
 The helper does not load or remove WooCommerce styles.
 
 WooCommerce Minimal Styles ON:
-When WooCommerce is active, loads the minimal classic stylesheet and replaces the classic WooCommerce default CSS. Cart/Checkout Blocks retain their own CSS.
+When WooCommerce is active, loads the minimal stylesheet on frontend pages. Classic WooCommerce CSS is replaced; Cart/Checkout Blocks keep their native CSS and behavior while receiving complementary, scoped styles.
 
 == Publishing updates ==
 
@@ -125,6 +126,10 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.1 =
+- Added lightweight Cart/Checkout Block styling for WooCommerce-configured pages, without replacing native block styles or JavaScript.
+- Preserved default-off toggle and classic shortcode support.
 
 = 1.1.0 =
 - Added default-off WooCommerce Minimal Styles toggle and bundled classic CSS.
