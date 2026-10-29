@@ -177,6 +177,72 @@ class EHK_WooCommerce_Styles {
     start();
   }
 }());
+
+/* Material floating labels, only for standard classic checkout text inputs. */
+(function () {
+  'use strict';
+
+  function syncFloating(row, input) {
+    if (!row || !input) return;
+    var filled = String(input.value || '').trim().length > 0;
+    row.classList.toggle('ehk-floating-active', document.activeElement === input || filled);
+  }
+
+  function initializeFloating() {
+    document.querySelectorAll(
+      '.woocommerce form.checkout.woocommerce-checkout .form-row, ' +
+      '.woocommerce-page form.checkout.woocommerce-checkout .form-row'
+    ).forEach(function (row) {
+      var label = row.querySelector(':scope > label[for]');
+      var wrapper = row.querySelector('.woocommerce-input-wrapper');
+      var input = wrapper && wrapper.querySelector('input.input-text');
+      if (!label || !input || !input.id || label.htmlFor !== input.id) return;
+      if (label.classList.contains('screen-reader-text')) return;
+      var type = String(input.type || '').toLowerCase();
+      if (['text', 'email', 'tel', 'number', 'password', 'url'].indexOf(type) === -1) return;
+      row.classList.add('ehk-floating-field');
+      syncFloating(row, input);
+    });
+  }
+
+  function onFieldEvent(event) {
+    var element = event.target;
+    if (!element || !element.matches || !element.matches('input.input-text')) return;
+    var row = element.closest('.ehk-floating-field');
+    if (row) syncFloating(row, element);
+  }
+
+  function enableCartUpdate(event) {
+    var input = event.target;
+    if (!input || !input.matches || !input.matches('form.woocommerce-cart-form .quantity input.qty')) return;
+    var form = input.closest('form.woocommerce-cart-form');
+    var update = form && form.querySelector('[name="update_cart"]');
+    if (update) {
+      update.disabled = false;
+      update.classList.remove('disabled');
+    }
+  }
+
+  function init() {
+    initializeFloating();
+    if (window.jQuery && document.body) {
+      window.jQuery(document.body).on('updated_checkout', function () {
+        initializeFloating();
+      });
+    }
+  }
+
+  ['focusin', 'focusout', 'input', 'change'].forEach(function (type) {
+    document.addEventListener(type, onFieldEvent);
+  });
+  document.addEventListener('change', enableCartUpdate);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+}());
 EHK_QTY_JS;
 	}
 
