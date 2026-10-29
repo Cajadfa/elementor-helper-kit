@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.14
+Stable tag: 1.1.15
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,11 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.15 =
+- Replace the default browser arrow on the native classic WooCommerce shop sorting dropdown with a lightweight modern SVG chevron matching the Minimal UI Kit.
+- Respect RTL/LTR chevron placement and reserve correct inline padding; preserve WooCommerce's original sorting select, option values, and change behavior.
+- Give the shop sort selector a consistent 50px control height, subtle radius, and visible keyboard-focus state.
 
 = 1.1.14 =
 - Vertically center classic WooCommerce success-notice text beside its native View Cart button while keeping right-to-left layout and a compact responsive gap.
