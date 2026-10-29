@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -48,6 +48,7 @@ A development and administration helper kit for Elementor sites with native publ
 6. WooCommerce Minimal Styles
 - Disabled by default, including after upgrades.
 - Loads a minimal, RTL-friendly stylesheet for classic WooCommerce templates and shortcodes.
+- Explicitly checks the WooCommerce-assigned Cart, Checkout, My Account, Shop and Terms page IDs for late stylesheet enqueue recovery.
 - Replaces WooCommerce's three classic default styles only while enabled.
 - Also adds scoped visual polish to Cart/Checkout Blocks on WooCommerce-assigned pages, while keeping their native layout, behavior, and CSS.
 - Does not modify third-party plugin CSS.
@@ -126,6 +127,10 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.2 =
+- Explicitly detect WooCommerce-configured page IDs for Cart, Checkout, My Account, Shop and Terms, restoring the minimal stylesheet just before head styles print if needed.
+- Keep shortcode support, the default-off setting, and the existing frontend enqueue behavior.
 
 = 1.1.1 =
 - Added lightweight Cart/Checkout Block styling for WooCommerce-configured pages, without replacing native block styles or JavaScript.
