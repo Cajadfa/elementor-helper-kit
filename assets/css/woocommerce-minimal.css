@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.9
+ * WooCommerce Minimal CSS — 1.1.10
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2215,3 +2215,18 @@ body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-but
   line-height: 20px !important;
 }
 
+
+
+/* 1.1.10 — RTL SelectWoo value padding fix.
+ * SelectWoo may use a flex parent and its rendered value retains right-side
+ * padding from core or a theme. In RTL, reserve space solely at the left for
+ * the dropdown chevron, with no padding on the text's right edge.
+ */
+html[dir="rtl"] :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__rendered,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__rendered:dir(rtl) {
+  padding-inline-start: 0 !important;
+  padding-inline-end: 43px !important;
+  padding-right: 0 !important;
+  padding-left: 43px !important;
+  text-align: right !important;
+}
