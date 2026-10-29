@@ -1,0 +1,3 @@
+Temporary GitHub permission test, round two.
+Created 2026-10-29 to investigate repeated Chat approvals.
+Delete after the user confirms the result.
