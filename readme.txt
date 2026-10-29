@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,12 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.4 =
+- Add a saved WooCommerce primary-color picker beneath the minimal-styles toggle, with sanitized hex values, hover shading, and readable button text.
+- Restore material-inspired outlined inputs and focus states, white cart-table headings, consistent prominent primary buttons, and dark disabled cart actions.
+- Add compact accessible plus/minus quantity controls for classic WooCommerce forms, with min/max/step handling and cart change events; skip controls provided by themes/plugins.
+- Keep all changes optional and leave WooCommerce Cart/Checkout Blocks untouched.
 
 = 1.1.3 =
 - Normalize classic checkout typography for form controls, placeholders, SelectWoo, notices, payment messages, privacy copy, and the order button using scoped selectors.
