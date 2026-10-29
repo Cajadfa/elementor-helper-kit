@@ -178,14 +178,26 @@ class EHK_WooCommerce_Styles {
   }
 }());
 
-/* Material floating labels, only for standard classic checkout text inputs. */
+/* Progressive floating labels for text, textarea, native select and SelectWoo. */
 (function () {
   'use strict';
 
-  function syncFloating(row, input) {
-    if (!row || !input) return;
-    var filled = String(input.value || '').trim().length > 0;
-    row.classList.toggle('ehk-floating-active', document.activeElement === input || filled);
+  function getControl(row) {
+    var wrapper = row.querySelector('.woocommerce-input-wrapper');
+    return wrapper && wrapper.querySelector(
+      'input.input-text:not([type="hidden"]), select, textarea'
+    );
+  }
+
+  function syncFloating(row, control) {
+    if (!row || !control) return;
+    var isSelect = control.tagName === 'SELECT';
+    var hasValue = String(control.value || '').trim().length > 0;
+    // Select controls always show a choice/placeholder on the bottom line.
+    row.classList.toggle(
+      'ehk-floating-active',
+      isSelect || hasValue || document.activeElement === control
+    );
   }
 
   function initializeFloating() {
@@ -194,22 +206,27 @@ class EHK_WooCommerce_Styles {
       '.woocommerce-page form.checkout.woocommerce-checkout .form-row'
     ).forEach(function (row) {
       var label = row.querySelector(':scope > label[for]');
-      var wrapper = row.querySelector('.woocommerce-input-wrapper');
-      var input = wrapper && wrapper.querySelector('input.input-text');
-      if (!label || !input || !input.id || label.htmlFor !== input.id) return;
+      var control = getControl(row);
+      if (!label || !control || !control.id || label.htmlFor !== control.id) return;
       if (label.classList.contains('screen-reader-text')) return;
-      var type = String(input.type || '').toLowerCase();
-      if (['text', 'email', 'tel', 'number', 'password', 'url'].indexOf(type) === -1) return;
+      if (control.tagName === 'INPUT' &&
+          ['text', 'email', 'tel', 'number', 'password', 'url'].indexOf(
+            String(control.type || '').toLowerCase()
+          ) === -1) return;
+
       row.classList.add('ehk-floating-field');
-      syncFloating(row, input);
+      row.classList.toggle('ehk-floating-select', control.tagName === 'SELECT');
+      row.classList.toggle('ehk-floating-textarea', control.tagName === 'TEXTAREA');
+      syncFloating(row, control);
     });
   }
 
   function onFieldEvent(event) {
-    var element = event.target;
-    if (!element || !element.matches || !element.matches('input.input-text')) return;
-    var row = element.closest('.ehk-floating-field');
-    if (row) syncFloating(row, element);
+    var control = event.target;
+    if (!control || !control.matches ||
+        !control.matches('.woocommerce-input-wrapper input.input-text, .woocommerce-input-wrapper select, .woocommerce-input-wrapper textarea')) return;
+    var row = control.closest('.ehk-floating-field');
+    if (row) syncFloating(row, control);
   }
 
   function enableCartUpdate(event) {
@@ -264,12 +281,24 @@ EHK_QTY_JS;
 		$on_primary = $luminance > 0.179 ? '#111827' : '#ffffff';
 		$hover      = sprintf( '#%02x%02x%02x', (int) round( $red * 0.86 ), (int) round( $green * 0.86 ), (int) round( $blue * 0.86 ) );
 
-		return sprintf(
+
+		$palette = sprintf(
 			':root{--wcm-primary:%s;--wcm-primary-hover:%s;--wcm-on-primary:%s;}',
 			$color,
 			$hover,
 			$on_primary
 		);
+
+		// Override only --wcm-* variables and WooCommerce surfaces; never theme chrome.
+		if ( 'dark' === EHK_Settings::woocommerce_color_mode() ) {
+			$palette .= ':root{--wcm-bg:#14151e;--wcm-surface:#20222e;--wcm-soft:#292c39;--wcm-text:#f3f4f8;--wcm-muted:#b3b9ca;--wcm-border:#414657;--wcm-shadow:0 8px 26px rgba(0,0,0,.18);}';
+			$palette .= '.woocommerce{background:var(--wcm-bg);color:var(--wcm-text);}';
+			$palette .= '.woocommerce table.shop_table thead th,.woocommerce table.shop_table tfoot th,.woocommerce .cart_totals table.shop_table th{background:var(--wcm-surface);color:var(--wcm-text);}';
+			$palette .= '.woocommerce :is(input.input-text,select,textarea,.select2-selection--single){background-color:var(--wcm-surface);color:var(--wcm-text);}';
+			$palette .= '.woocommerce .woocommerce-privacy-policy-text,.woocommerce .woocommerce-privacy-policy-text p{color:var(--wcm-text);}';
+		}
+
+		return $palette;
 	}
 
 	public static function filter_classic_styles( $styles ) {
