@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.10
+ * WooCommerce Minimal CSS — 1.1.11
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2229,4 +2229,25 @@ html[dir="rtl"] :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-c
   padding-right: 0 !important;
   padding-left: 43px !important;
   text-align: right !important;
+}
+
+
+/* 1.1.11 — keep native checkout inputs uniform even before JS enhancement.
+ * WooCommerce may hide the second address-line label with screen-reader-text;
+ * the progressive label script restores it, preserving its input association.
+ * The fallback below keeps the field 58px tall when JS is unavailable.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row:not(.ehk-floating-field) .woocommerce-input-wrapper > input.input-text:not(.qty),
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row:not(.ehk-floating-field) .woocommerce-input-wrapper > select:not(.select2-hidden-accessible) {
+  box-sizing: border-box !important;
+  width: 100%;
+  height: 58px !important;
+  min-height: 58px !important;
+  padding: 13px 16px !important;
+  border: 1px solid var(--wcm-border);
+  border-radius: 11px;
+  background-color: var(--wcm-surface);
+  color: var(--wcm-text);
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
