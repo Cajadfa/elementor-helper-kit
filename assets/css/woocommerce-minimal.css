@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.13
+ * WooCommerce Minimal CSS — 1.1.14
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2521,4 +2521,61 @@ div.product .woocommerce-tabs ul.tabs li::after {
   border-bottom: 0 !important;
   border-block-end: 0 !important;
   box-shadow: none !important;
+}
+
+
+/* 1.1.14 — center native WooCommerce success notices vertically.
+ * Flex lays out the text's anonymous flex item opposite the native View Cart
+ * link; unlike the old float-based notice, the text is vertically centered.
+ */
+:is(.woocommerce, .woocommerce-page) .woocommerce-message {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 18px;
+  row-gap: 10px;
+  min-height: 74px;
+  padding: 14px 22px;
+  font-size: 14px;
+  line-height: 1.75;
+  text-align: start;
+}
+
+:is(.woocommerce, .woocommerce-page) .woocommerce-message > .button,
+:is(.woocommerce, .woocommerce-page) .woocommerce-message > a.wc-forward {
+  order: 2;
+  flex: 0 0 auto;
+  float: none !important;
+  margin: 0 !important;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Full-width single-product CTA: a crisp shopping-bag-plus icon. The icon is
+ * decorative CSS (button's accessible name still comes from its real text).
+ * currentColor follows the configured primary-button contrast automatically.
+ */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart button.single_add_to_cart_button {
+  gap: 11px !important;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart button.single_add_to_cart_button::before {
+  content: "" !important;
+  display: inline-block !important;
+  position: static !important;
+  flex: 0 0 22px;
+  width: 22px !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: currentColor !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.8 8h14.4l-1.1 12H5.9L4.8 8Z'/%3E%3Cpath d='M9 9V6a3 3 0 0 1 6 0v3'/%3E%3Cpath d='M12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.8 8h14.4l-1.1 12H5.9L4.8 8Z'/%3E%3Cpath d='M9 9V6a3 3 0 0 1 6 0v3'/%3E%3Cpath d='M12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  pointer-events: none;
 }
