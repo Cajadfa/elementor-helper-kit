@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.0`  
+**Current version:** `1.1.1`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -74,7 +74,8 @@ Disabled by default, including when upgrading an existing installation.
 - When enabled and WooCommerce is active, replaces the three classic WooCommerce core stylesheets with `assets/css/woocommerce-minimal.css`.
 - Loads CSS globally on the frontend to support product shortcodes and widgets on non-shop pages.
 - Toggling OFF restores default WooCommerce styling; no extra JavaScript or template overrides.
-- Cart/Checkout **Blocks** and third-party extension styles are not replaced.
+- Also styles the WooCommerce Cart/Checkout **Blocks** commonly used on pages assigned in **WooCommerce > Settings > Advanced**. Their native styles, floating labels, validation, layouts, and JavaScript remain intact; only visual details are harmonized.
+- The same toggle controls both classic output and the optional Block polish. Third-party extension styles are not replaced.
 - Has no effect if WooCommerce is disabled or the bundled CSS is unreadable.
 
 ### 7. Native GitHub Updates
