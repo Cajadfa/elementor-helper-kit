@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.14
+ * WooCommerce Minimal CSS — 1.1.15
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2578,4 +2578,54 @@ div.product .summary form.cart button.single_add_to_cart_button::before {
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.8 8h14.4l-1.1 12H5.9L4.8 8Z'/%3E%3Cpath d='M9 9V6a3 3 0 0 1 6 0v3'/%3E%3Cpath d='M12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center / contain no-repeat !important;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.8 8h14.4l-1.1 12H5.9L4.8 8Z'/%3E%3Cpath d='M9 9V6a3 3 0 0 1 6 0v3'/%3E%3Cpath d='M12 12v5M9.5 14.5h5'/%3E%3C/svg%3E") center / contain no-repeat !important;
   pointer-events: none;
+}
+
+
+/* 1.1.15 — refined shop/catalog sorting control.
+ * Keep the native WooCommerce <select name="orderby"> and its change handler.
+ * Only suppress the browser arrow and paint our 18px RTL/LTR chevron instead.
+ */
+:is(.woocommerce, .woocommerce-page) form.woocommerce-ordering select,
+body.woocommerce-page form.woocommerce-ordering select.orderby {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  box-sizing: border-box !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  max-width: 100%;
+  padding-block: 10px !important;
+  padding-inline-start: 16px !important;
+  padding-inline-end: 46px !important;
+  border: 1px solid var(--wcm-border) !important;
+  border-radius: 11px !important;
+  background-color: var(--wcm-surface) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 18px 18px !important;
+  background-position: right 16px center !important;
+  color: var(--wcm-text) !important;
+  font-family: inherit;
+  font-size: 14px !important;
+  font-weight: 500;
+  line-height: 1.4 !important;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 4%);
+  cursor: pointer;
+}
+
+html[dir="rtl"] :is(.woocommerce, .woocommerce-page) form.woocommerce-ordering select,
+html[dir="rtl"] body.woocommerce-page form.woocommerce-ordering select.orderby {
+  background-position: left 16px center !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.woocommerce-ordering select:focus-visible,
+body.woocommerce-page form.woocommerce-ordering select.orderby:focus-visible {
+  border-color: var(--wcm-primary) !important;
+  outline: 2px solid var(--wcm-primary);
+  outline-offset: 2px;
+}
+
+/* Prevent duplicate system arrows in older Edge/IE implementations. */
+:is(.woocommerce, .woocommerce-page) form.woocommerce-ordering select::-ms-expand {
+  display: none;
 }
