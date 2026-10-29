@@ -15,9 +15,24 @@ class EHK_WooCommerce_Styles {
 	public static function init() {
 		add_filter( 'woocommerce_enqueue_styles', array( __CLASS__, 'filter_classic_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_styles' ), 99 );
+		add_filter( 'woocommerce_product_single_add_to_cart_text', array( __CLASS__, 'single_cart_button_text' ), 100 );
 
 		// Recheck explicitly assigned WooCommerce pages just before head styles print.
 		add_action( 'wp_head', array( __CLASS__, 'ensure_configured_page_styles' ), 7 );
+	}
+
+
+	/**
+	 * Text-only override for the native single-product WooCommerce purchase button.
+	 * Disabled by default and independent of the optional visual stylesheet.
+	 */
+	public static function single_cart_button_text( $original ) {
+		if ( ! EHK_Settings::custom_cart_button_text_enabled() ) {
+			return $original;
+		}
+
+		$custom = EHK_Settings::custom_cart_button_text();
+		return '' !== $custom ? $custom : $original;
 	}
 
 	/**
