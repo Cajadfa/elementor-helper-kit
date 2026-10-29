@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.11
+ * WooCommerce Minimal CSS — 1.1.12
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2250,4 +2250,231 @@ html[dir="rtl"] :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-c
   color: var(--wcm-text);
   font-size: 14px !important;
   line-height: 1.5 !important;
+}
+
+
+/* 1.1.12 — complete classic single-product controls and review rating UI.
+ * These selectors are limited to single-product pages so Cart/Checkout remain
+ * unaffected. No WooCommerce templates, review fields or submit hooks change.
+ */
+
+/* Full-width buy action below the quantity selector on simple products. */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  gap: 12px;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart > .quantity {
+  float: none !important;
+  flex: 0 0 auto;
+  margin: 0 !important;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart > button.single_add_to_cart_button,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart .woocommerce-variation-add-to-cart > button.single_add_to_cart_button {
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  float: none !important;
+  flex: 0 0 100%;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 16px 22px !important;
+  border: 1px solid var(--wcm-primary) !important;
+  border-radius: 12px !important;
+  background: var(--wcm-primary) !important;
+  color: var(--wcm-on-primary) !important;
+  font-family: inherit !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart > button.single_add_to_cart_button:hover:not(:disabled),
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart .woocommerce-variation-add-to-cart > button.single_add_to_cart_button:hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover) !important;
+  background: var(--wcm-primary-hover) !important;
+  color: var(--wcm-on-primary) !important;
+}
+
+/* Variable products have their own quantity / button wrapper. */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart .single_variation_wrap,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart .woocommerce-variation-add-to-cart {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .summary form.cart .woocommerce-variation-add-to-cart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* The active tab may retain its border indicator, but not text underlining. */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li a,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li a:is(:hover, :focus, :active, :visited) {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
+
+/*
+ * WooCommerce classic rating input is <p class="stars"><span>
+ * <a class="star-1">1 of 5 stars</a> ... <a class="star-5">5 of 5 stars</a>.
+ * The anchors remain actual links for keyboard/WooCommerce's existing JS,
+ * while glyphs are CSS-only (no missing external icon-font dependency).
+ */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars {
+  display: block;
+  margin: 10px 0 18px;
+  padding: 0;
+  line-height: 1;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  direction: ltr;
+  gap: 4px;
+  vertical-align: middle;
+  width: auto;
+  max-width: 100%;
+  margin: 0;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span a {
+  position: relative !important;
+  display: inline-flex !important;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  float: none !important;
+  overflow: hidden;
+  width: 32px !important;
+  min-width: 32px;
+  max-width: 32px;
+  height: 38px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  outline-offset: 2px;
+  background: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-align: center;
+  text-indent: -9999px !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span a::before {
+  content: "★" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px !important;
+  height: 38px !important;
+  padding: 0 !important;
+  background: none !important;
+  color: #cbd5e1 !important;
+  font-family: Arial, "Segoe UI Symbol", sans-serif !important;
+  font-size: 29px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-indent: 0 !important;
+  text-shadow: none !important;
+  transition: color .15s ease;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span a::after {
+  content: none !important;
+}
+
+/* Selected score lights all stars up to that score, not only the final star. */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span:not(:hover, :focus-within) a:is(.active, :has(~ a.active))::before,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span:hover a:is(:hover, :has(~ a:hover))::before,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form p.stars span:focus-within:not(:hover) a:is(:focus-visible, :has(~ a:focus-visible))::before {
+  color: #e5a82a !important;
+}
+
+/* Review submit is a normal, prominent button rather than a tiny square. */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form #respond :is(input#submit, button[type="submit"], .form-submit input.submit) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  min-width: 160px !important;
+  min-height: 52px !important;
+  margin: 0 !important;
+  padding: 12px 25px !important;
+  border: 1px solid var(--wcm-primary) !important;
+  border-radius: 11px !important;
+  background: var(--wcm-primary) !important;
+  color: var(--wcm-on-primary) !important;
+  font-family: inherit !important;
+  font-size: 16px !important;
+  font-weight: 750 !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+#reviews #review_form #respond :is(input#submit, button[type="submit"], .form-submit input.submit):hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover) !important;
+  background: var(--wcm-primary-hover) !important;
+  color: var(--wcm-on-primary) !important;
+}
+
+@media (max-width: 767px) {
+  :is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+  div.product .summary form.cart > button.single_add_to_cart_button,
+  :is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+  div.product .summary form.cart .woocommerce-variation-add-to-cart > button.single_add_to_cart_button {
+    min-height: 58px !important;
+    font-size: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+  #reviews #review_form p.stars span a::before {
+    transition: none;
+  }
 }
