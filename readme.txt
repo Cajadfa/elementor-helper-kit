@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,12 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.7 =
+- Display the classic checkout coupon input and Apply Coupon button on the same row at desktop widths while preserving WooCommerce's native coupon toggle visibility and submission behavior.
+- Align order review heading, review table and payment panel at full sidebar width.
+- Use a visually centered RTL/LTR-safe SVG chevron for SelectWoo/Select2 fields, avoiding sideways arrows caused by logical border directions.
+- Match the classic cart Proceed to Checkout button to the 64px/19px prominent Place Order control, including hover and responsive sizing.
 
 = 1.1.6 =
 - Add a WooCommerce Light/Dark skin selector alongside the primary-color setting; both are off when the optional minimal-style feature is disabled.
