@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.7`  
+**Current version:** `1.1.8`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -80,7 +80,7 @@ Disabled by default, including when upgrading an existing installation.
 - Classic checkout labels float inside native inputs, selects, SelectWoo/Select2 and textareas; fields share a consistent 58px height with a modern chevron for dropdowns. The Place Order button has higher-specificity sizing to withstand typical classic WooCommerce theme overrides.
 - Classic Checkout: material-style floating labels for plain text fields, taller order notes, and bolder primary buttons. Prefilled values and updated-checkout fragments retain the floating state.
 - Classic Cart: the coupon field is hidden here, leaving coupon entry at Checkout only; the Update Cart control is hidden while disabled and reappears after changing quantities.
-- Classic Checkout coupon: coupon field and submit button share one row on desktop, with the original WooCommerce expand/collapse behavior preserved.
+- Classic Checkout coupon: coupon field and submit button share one row on desktop, with the original WooCommerce expand/collapse behavior preserved. The float-containing clear fix in 1.1.8 prevents the coupon panel from collapsing the checkout columns when opened or submitted.
 - Classic Checkout order review: review table and payment box stretch to the same sidebar width, and SelectWoo uses centered, RTL-safe dropdown chevrons.
 - Classic Cart Proceed to Checkout CTA uses the same prominent sizing as the Checkout Place Order button.
 - Also styles the WooCommerce Cart/Checkout **Blocks** commonly used on pages assigned in **WooCommerce > Settings > Advanced**. Their native styles, floating labels, validation, layouts, and JavaScript remain intact; only visual details are harmonized.
