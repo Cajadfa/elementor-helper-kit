@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,12 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.8 =
+- Fix a classic checkout regression when expanding/applying coupons: floated coupon form rows leaked outside their zero-height parent and collapsed the following checkout grid.
+- Clear coupon floats without overriding WooCommerce's native slideToggle visibility, submission, or AJAX behavior.
+- Explicitly lay out the standard WooCommerce checkout markup's direct children (.col2-set, #order_review_heading, #order_review) in a two-column grid.
+- Prevent order heading vertical text and excessive heading-to-review gaps; preserve full order summary widths and stack checkout cleanly at tablet/mobile breakpoints.
 
 = 1.1.7 =
 - Display the classic checkout coupon input and Apply Coupon button on the same row at desktop widths while preserving WooCommerce's native coupon toggle visibility and submission behavior.
