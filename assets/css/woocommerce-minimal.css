@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.3
+ * WooCommerce Minimal CSS — 1.1.4
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -1099,6 +1099,214 @@
   width: 54px;
   margin-inline-start: 12px;
   border-radius: var(--wcm-radius-sm);
+}
+
+/*
+ * Material-inspired outlined controls for classic WooCommerce forms.
+ * Native labels remain visible; focus uses an accessible colored outline.
+ * Quantity steppers get their own more compact design below.
+ */
+:is(.woocommerce, .woocommerce-page) :is(
+  form.checkout, form.checkout_coupon, form.woocommerce-cart-form,
+  form.login, form.register, form.lost_reset_password, form.woocommerce-form, form.cart
+) :is(
+  input.input-text:not(.qty), input[type="text"]:not(.qty),
+  input[type="email"], input[type="tel"], input[type="password"],
+  input[type="number"]:not(.qty), select, textarea
+) {
+  min-height: 46px;
+  padding: 11px 14px;
+  border: 1px solid var(--wcm-border);
+  border-radius: 10px;
+  background: var(--wcm-surface);
+  color: var(--wcm-text);
+  font-size: 14px;
+  line-height: 1.55;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 4%);
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(
+  form.checkout, form.checkout_coupon, form.woocommerce-cart-form,
+  form.login, form.register, form.lost_reset_password, form.woocommerce-form, form.cart
+) textarea {
+  min-height: 120px;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(
+  form.checkout, form.checkout_coupon, form.woocommerce-cart-form,
+  form.login, form.register, form.lost_reset_password, form.woocommerce-form, form.cart
+) :is(input.input-text, textarea)::placeholder {
+  color: #8a94a3;
+  font-size: 14px;
+  opacity: 1;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(
+  form.checkout, form.checkout_coupon, form.woocommerce-cart-form,
+  form.login, form.register, form.lost_reset_password, form.woocommerce-form, form.cart
+) :is(input.input-text, input[type="text"], input[type="email"], input[type="tel"], select, textarea):focus {
+  border-color: var(--wcm-primary);
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--wcm-primary) 16%, transparent);
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout .select2-container .select2-selection--single {
+  min-height: 46px;
+  height: 46px;
+  border: 1px solid var(--wcm-border);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 4%);
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout .select2-container .select2-selection__rendered {
+  font-size: 14px;
+  line-height: 44px;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout .select2-container--focus .select2-selection--single,
+:is(.woocommerce, .woocommerce-page) form.checkout .select2-container--open .select2-selection--single {
+  border-color: var(--wcm-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--wcm-primary) 16%, transparent);
+}
+
+/* White, readable heading cells in the classic cart/review tables. */
+:is(.woocommerce, .woocommerce-page) table.shop_table thead th,
+:is(.woocommerce, .woocommerce-page) table.shop_table tfoot th,
+:is(.woocommerce, .woocommerce-page) .cart_totals table.shop_table th {
+  background: #fff;
+  color: var(--wcm-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Accessible + / - controls; script only enhances editable classic inputs. */
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  direction: ltr;
+  width: auto;
+  max-width: 100%;
+  min-width: 124px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--wcm-border);
+  border-radius: 10px;
+  background: var(--wcm-surface);
+  overflow: hidden;
+  vertical-align: middle;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 4%);
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced input.qty {
+  appearance: textfield;
+  -moz-appearance: textfield;
+  flex: 0 0 48px;
+  width: 48px;
+  min-width: 0;
+  min-height: 42px;
+  height: 42px;
+  margin: 0;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--wcm-text);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 650;
+  text-align: center;
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced input.qty::-webkit-inner-spin-button,
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced input.qty::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced input.qty:focus {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--wcm-primary) 30%, transparent);
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced .ehk-qty-step {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  flex: 0 0 37px;
+  width: 37px;
+  height: 42px;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--wcm-text);
+  font-family: inherit;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced .ehk-qty-step:hover:not(:disabled) {
+  background: var(--wcm-soft);
+  color: var(--wcm-primary);
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced .ehk-qty-step:focus-visible {
+  outline: 2px solid var(--wcm-primary);
+  outline-offset: -3px;
+}
+
+:is(.woocommerce, .woocommerce-page) .quantity.ehk-qty-enhanced .ehk-qty-step:disabled {
+  color: var(--wcm-muted);
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+/* Primary action buttons: bold and comfortably sized without overscaling. */
+:is(.woocommerce, .woocommerce-page) :is(
+  button.button, input.button, a.button, .woocommerce-button, button.single_add_to_cart_button
+),
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #place_order {
+  min-height: 46px;
+  padding: 11px 19px;
+  border-color: var(--wcm-primary);
+  background: var(--wcm-primary);
+  color: var(--wcm-on-primary);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(
+  button.button, input.button, a.button, .woocommerce-button, button.single_add_to_cart_button
+):hover:not(:disabled):not(.disabled),
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #place_order:hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover);
+  background: var(--wcm-primary-hover);
+  color: var(--wcm-on-primary);
+}
+
+/* Disabled cart actions should be dark, not washed-out lavender. */
+:is(.woocommerce, .woocommerce-page) :is(
+  button.button:disabled, button.button:disabled[disabled], button.button.disabled,
+  input.button:disabled, a.button.disabled
+) {
+  border-color: #39414b;
+  background: #39414b;
+  color: #fff;
+  opacity: .88;
+  box-shadow: none;
+  cursor: not-allowed;
 }
 
 /* Mobile and narrow layouts */
