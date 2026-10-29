@@ -7,10 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class EHK_Settings {
 	const OPTION = 'ehk_settings';
 	const PAGE   = 'elementor-helper-kit';
+	const DEFAULT_WC_PRIMARY = '#4b1b61';
 
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_color_picker' ) );
 	}
 
 	public static function activate() {
@@ -20,6 +22,7 @@ class EHK_Settings {
 			'hide_frontend_admin_bar'   => 1,
 			'elementor_cache_toolbar'   => 1,
 			'woocommerce_minimal_styles' => 0,
+			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 		);
 
 		$settings = get_option( self::OPTION, false );
@@ -62,6 +65,30 @@ class EHK_Settings {
 		return (bool) self::get( 'woocommerce_minimal_styles', 0 );
 	}
 
+	public static function woocommerce_primary_color() {
+		return self::normalize_primary_color( self::get( 'woocommerce_primary_color', self::DEFAULT_WC_PRIMARY ) );
+	}
+
+	private static function normalize_primary_color( $value ) {
+		$color = is_string( $value ) ? sanitize_hex_color( $value ) : '';
+		if ( ! $color ) {
+			return self::DEFAULT_WC_PRIMARY;
+		}
+		if ( 4 === strlen( $color ) ) {
+			$color = '#' . $color[1] . $color[1] . $color[2] . $color[2] . $color[3] . $color[3];
+		}
+		return strtolower( $color );
+	}
+
+	public static function enqueue_color_picker( $hook ) {
+		if ( 'settings_page_' . self::PAGE !== $hook ) {
+			return;
+		}
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_add_inline_script( 'wp-color-picker', "jQuery(function(\$){ jQuery('.ehk-primary-color').wpColorPicker(); });" );
+	}
+
 	public static function register_menu() {
 		add_options_page(
 			__( 'Elementor Helper Kit', 'elementor-helper-kit' ),
@@ -85,6 +112,7 @@ class EHK_Settings {
 					'hide_frontend_admin_bar' => 1,
 					'elementor_cache_toolbar' => 1,
 					'woocommerce_minimal_styles' => 0,
+			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 				),
 			)
 		);
@@ -99,6 +127,7 @@ class EHK_Settings {
 			'hide_frontend_admin_bar' => empty( $input['hide_frontend_admin_bar'] ) ? 0 : 1,
 			'elementor_cache_toolbar' => empty( $input['elementor_cache_toolbar'] ) ? 0 : 1,
 			'woocommerce_minimal_styles' => empty( $input['woocommerce_minimal_styles'] ) ? 0 : 1,
+			'woocommerce_primary_color' => self::normalize_primary_color( isset( $input['woocommerce_primary_color'] ) ? $input['woocommerce_primary_color'] : self::woocommerce_primary_color() ),
 		);
 	}
 
@@ -112,6 +141,7 @@ class EHK_Settings {
 		$hide_admin_bar_enabled      = self::hide_frontend_admin_bar_enabled();
 		$cache_toolbar_enabled       = self::elementor_cache_toolbar_enabled();
 		$woocommerce_minimal_enabled = self::woocommerce_minimal_styles_enabled();
+		$woocommerce_primary_color   = self::woocommerce_primary_color();
 		?>
 		<div class="wrap ehk-settings-wrap">
 			<h1><?php echo esc_html__( 'Elementor Helper Kit', 'elementor-helper-kit' ); ?></h1>
@@ -214,7 +244,7 @@ class EHK_Settings {
 					<div class="ehk-card-head">
 						<div>
 							<h2>WooCommerce Minimal Styles</h2>
-							<p>استایل پایه و مینیمال ووکامرس کلاسیک، بدون جاوااسکریپت اضافی یا تغییر قالب.</p>
+							<p>استایل مینیمال ووکامرس کلاسیک، همراه کنترل سبک تعداد و بدون بازنویسی قالب‌های ووکامرس.</p>
 						</div>
 						<label class="ehk-switch">
 							<input
@@ -231,6 +261,19 @@ class EHK_Settings {
 						<strong>خاموش (پیش‌فرض):</strong> افزونه هیچ تغییری در استایل‌های ووکامرس نمی‌دهد.<br>
 						<strong>توجه:</strong> برای خروجی کلاسیک استایل‌های پایه جایگزین می‌شوند؛ سبد خرید و تسویه‌حساب بلاکی نیز ظاهر هماهنگ می‌گیرند، ولی استایل‌ها و رفتار اصلی Blocks و افزونه‌های جانبی حفظ می‌شود.
 					</p>
+					<div class="ehk-color-setting">
+						<label for="ehk-woocommerce-primary-color"><strong>رنگ پرایمری ووکامرس</strong></label>
+						<input
+							id="ehk-woocommerce-primary-color"
+							type="text"
+							class="ehk-primary-color"
+							name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_primary_color]"
+							value="<?php echo esc_attr( $woocommerce_primary_color ); ?>"
+							data-default-color="<?php echo esc_attr( self::DEFAULT_WC_PRIMARY ); ?>"
+						/>
+						<p class="description">رنگ دکمه‌های اصلی، حالت hover و بخش‌های تأکیدی ووکامرس. فقط وقتی WooCommerce Minimal Styles روشن باشد اعمال می‌شود.</p>
+					</div>
+
 				</div>
 
 				<div class="ehk-card">
@@ -250,6 +293,9 @@ class EHK_Settings {
 			.ehk-card-head{display:flex;align-items:center;justify-content:space-between;gap:24px}
 			.ehk-card-head p{margin:0;color:#646970}
 			.ehk-note{margin:18px 0 0;padding:14px 16px;background:#f6f7f7;border-radius:8px}
+			.ehk-color-setting{margin:18px 0 0;padding:16px;border:1px solid #dcdcde;border-radius:8px;background:#fcfcfd}
+			.ehk-color-setting>label{display:block;margin-bottom:12px}
+			.ehk-color-setting .description{margin:10px 0 0;color:#646970}
 			.ehk-switch{position:relative;display:inline-block;width:54px;height:30px;flex:0 0 auto}
 			.ehk-switch input{opacity:0;width:0;height:0}
 			.ehk-slider{position:absolute;cursor:pointer;inset:0;background:#8c8f94;border-radius:999px;transition:.2s}
