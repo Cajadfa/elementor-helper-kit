@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.7
+ * WooCommerce Minimal CSS — 1.1.8
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2039,5 +2039,104 @@ body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-but
   body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-button {
     min-height: 58px !important;
     font-size: 18px !important;
+  }
+}
+
+
+/*
+ * 1.1.8 — prevent classic checkout layout collapse when a coupon is expanded.
+ *
+ * Woo checkout_coupon uses floated .form-row-first/.form-row-last children.
+ * Without a clearfix the coupon form height is 0 and those floats intrude into
+ * the following checkout form. Keep WooCommerce's inline slideToggle display.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/*
+ * WooCommerce standard checkout markup has > .col2-set (containing
+ * #customer_details), > #order_review_heading and > #order_review as three
+ * direct children. Arrange THESE siblings as grid items.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout {
+  display: grid;
+  clear: both;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  grid-template-areas: "customer heading" "customer review";
+  grid-template-rows: max-content 1fr;
+  column-gap: 26px;
+  row-gap: 10px;
+  align-items: start;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > .col2-set {
+  grid-area: customer;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  float: none !important;
+  width: 100% !important;
+  min-width: 0;
+  margin: 0;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > .col2-set > #customer_details {
+  float: none !important;
+  width: 100% !important;
+  min-width: 0;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > #order_review_heading {
+  grid-area: heading;
+  grid-column: 2;
+  grid-row: 1;
+  display: block;
+  float: none !important;
+  width: 100% !important;
+  min-width: 0;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.6;
+  align-self: start;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > #order_review {
+  grid-area: review;
+  grid-column: 2;
+  grid-row: 2;
+  float: none !important;
+  width: 100% !important;
+  min-width: 0;
+  margin: 0 !important;
+  align-self: start;
+}
+
+@media (max-width: 1024px) {
+  :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "customer" "heading" "review";
+    grid-template-rows: auto;
+    gap: 14px;
+  }
+
+  :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > .col2-set {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > #order_review_heading {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout > #order_review {
+    grid-column: 1;
+    grid-row: 3;
   }
 }
