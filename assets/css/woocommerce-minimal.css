@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.8
+ * WooCommerce Minimal CSS — 1.1.9
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -2140,3 +2140,78 @@ body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-but
     grid-row: 3;
   }
 }
+
+
+/* 1.1.9 — checkout spacing and coupon validation notice polish. */
+
+/* Keep the native WooCommerce coupon toggle and layout intact; add breathing
+ * room underneath its expanded, float-contained inline form.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon {
+  margin-block-end: 26px !important;
+}
+
+/* A failed/empty coupon must remain visible and accessible, but not inherit
+ * the theme's oversized error typography. Keep the error's semantics intact.
+ */
+:is(.woocommerce, .woocommerce-page) :is(
+  ul.woocommerce-error,
+  div.woocommerce-error,
+  .woocommerce-NoticeGroup ul.woocommerce-error
+) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-block: 12px 24px !important;
+  padding: 12px 17px !important;
+  border: 1px solid var(--wcm-border);
+  border-inline-start: 3px solid var(--wcm-error) !important;
+  border-radius: 10px;
+  background: var(--wcm-soft);
+  color: var(--wcm-text);
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.75 !important;
+  text-align: start;
+  list-style: none !important;
+  overflow-wrap: anywhere;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(
+  ul.woocommerce-error li,
+  div.woocommerce-error li,
+  .woocommerce-NoticeGroup ul.woocommerce-error li
+) {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: inherit;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.75 !important;
+  list-style: none !important;
+}
+
+/* Existing WC checkout templates may put the billing title directly inside
+ * .woocommerce-billing-fields; remove the theme's extra top margin.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .woocommerce-billing-fields h3 {
+  margin-top: 0 !important;
+  margin-block-start: 0 !important;
+}
+
+/* Keep the selected option's value clearly separated from its small
+ * Material-style floating label, without changing the control height.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .woocommerce-input-wrapper > select:not(.select2-hidden-accessible) {
+  padding-block-start: 31px !important;
+  padding-block-end: 3px !important;
+  line-height: 20px !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__rendered {
+  padding-block-start: 32px !important;
+  padding-block-end: 3px !important;
+  line-height: 20px !important;
+}
+
