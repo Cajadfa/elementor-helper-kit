@@ -8,6 +8,7 @@ class EHK_Settings {
 	const OPTION = 'ehk_settings';
 	const PAGE   = 'elementor-helper-kit';
 	const DEFAULT_WC_PRIMARY = '#4b1b61';
+	const DEFAULT_CART_BUTTON_TEXT = 'افزودن به سبد خرید';
 
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ) );
@@ -24,6 +25,8 @@ class EHK_Settings {
 			'woocommerce_minimal_styles' => 0,
 			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 			'woocommerce_color_mode'   => 'light',
+			'woocommerce_cart_button_text_enabled' => 0,
+			'woocommerce_cart_button_text' => self::DEFAULT_CART_BUTTON_TEXT,
 		);
 
 		$settings = get_option( self::OPTION, false );
@@ -68,6 +71,15 @@ class EHK_Settings {
 
 	public static function woocommerce_color_mode() {
 		return 'dark' === self::get( 'woocommerce_color_mode', 'light' ) ? 'dark' : 'light';
+	}
+
+	public static function custom_cart_button_text_enabled() {
+		return (bool) self::get( 'woocommerce_cart_button_text_enabled', 0 );
+	}
+
+	public static function custom_cart_button_text() {
+		$text = self::get( 'woocommerce_cart_button_text', self::DEFAULT_CART_BUTTON_TEXT );
+		return is_string( $text ) ? trim( $text ) : self::DEFAULT_CART_BUTTON_TEXT;
 	}
 
 	public static function woocommerce_primary_color() {
@@ -119,6 +131,8 @@ class EHK_Settings {
 					'woocommerce_minimal_styles' => 0,
 					'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 					'woocommerce_color_mode' => 'light',
+					'woocommerce_cart_button_text_enabled' => 0,
+					'woocommerce_cart_button_text' => self::DEFAULT_CART_BUTTON_TEXT,
 				),
 			)
 		);
@@ -135,6 +149,8 @@ class EHK_Settings {
 			'woocommerce_minimal_styles' => empty( $input['woocommerce_minimal_styles'] ) ? 0 : 1,
 			'woocommerce_primary_color' => self::normalize_primary_color( isset( $input['woocommerce_primary_color'] ) ? $input['woocommerce_primary_color'] : self::woocommerce_primary_color() ),
 			'woocommerce_color_mode' => isset( $input['woocommerce_color_mode'] ) && 'dark' === $input['woocommerce_color_mode'] ? 'dark' : 'light',
+			'woocommerce_cart_button_text_enabled' => empty( $input['woocommerce_cart_button_text_enabled'] ) ? 0 : 1,
+			'woocommerce_cart_button_text' => isset( $input['woocommerce_cart_button_text'] ) && is_string( $input['woocommerce_cart_button_text'] ) ? sanitize_text_field( $input['woocommerce_cart_button_text'] ) : self::custom_cart_button_text(),
 		);
 	}
 
@@ -150,6 +166,8 @@ class EHK_Settings {
 		$woocommerce_minimal_enabled = self::woocommerce_minimal_styles_enabled();
 		$woocommerce_primary_color   = self::woocommerce_primary_color();
 		$woocommerce_color_mode      = self::woocommerce_color_mode();
+		$cart_button_text_enabled    = self::custom_cart_button_text_enabled();
+		$cart_button_text            = self::custom_cart_button_text();
 		?>
 		<div class="wrap ehk-settings-wrap">
 			<h1><?php echo esc_html__( 'Elementor Helper Kit', 'elementor-helper-kit' ); ?></h1>
@@ -291,6 +309,26 @@ class EHK_Settings {
 						<p class="description">رنگ اصلی و حالت روشن/تیره فقط برای اجزای WooCommerce Minimal Styles اعمال می‌شوند و به ظاهر کلی قالب دست نمی‌زنند.</p>
 					</div>
 
+					<div class="ehk-cart-text-setting">
+						<div class="ehk-card-head">
+							<div>
+								<strong>متن سفارشی دکمه «افزودن به سبد خرید»</strong>
+								<p class="description">فقط متن دکمه اصلی صفحه محصول را تغییر می‌دهد؛ متن پیش‌فرض ووکامرس با خاموش شدن گزینه برمی‌گردد.</p>
+							</div>
+							<label class="ehk-switch">
+								<input type="checkbox"
+									name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_cart_button_text_enabled]"
+									value="1" <?php checked( $cart_button_text_enabled ); ?> />
+								<span class="ehk-slider" aria-hidden="true"></span>
+							</label>
+						</div>
+						<label for="ehk-cart-button-text"><strong>متن دکمه</strong></label>
+						<input id="ehk-cart-button-text" type="text" class="regular-text"
+							name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_cart_button_text]"
+							value="<?php echo esc_attr( $cart_button_text ); ?>" maxlength="80" dir="auto" />
+						<p class="description">پیش‌فرض: خاموش. فقط دکمه خرید در صفحه تکی محصول؛ بدون تغییر رفتار ثبت سبد.</p>
+					</div>
+
 				</div>
 
 				<div class="ehk-card">
@@ -316,6 +354,11 @@ class EHK_Settings {
 			.ehk-wc-mode-setting{display:flex;flex-direction:column;gap:10px}
 			.ehk-mode-options{display:flex;align-items:center;gap:14px}
 			.ehk-mode-options label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+			.ehk-cart-text-setting{margin-top:18px;padding:16px;border:1px solid #dcdcde;border-radius:8px;background:#fcfcfd}
+			.ehk-cart-text-setting>.ehk-card-head{margin-bottom:14px}
+			.ehk-cart-text-setting>label{display:block;margin-bottom:8px}
+			.ehk-cart-text-setting input[type="text"]{max-width:100%}
+			.ehk-cart-text-setting .description{margin:7px 0 0}
 			.ehk-color-setting .description{margin:10px 0 0;color:#646970}
 			.ehk-switch{position:relative;display:inline-block;width:54px;height:30px;flex:0 0 auto}
 			.ehk-switch input{opacity:0;width:0;height:0}
