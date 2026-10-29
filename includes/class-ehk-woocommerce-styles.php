@@ -207,12 +207,40 @@ class EHK_WooCommerce_Styles {
     ).forEach(function (row) {
       var label = row.querySelector(':scope > label[for]');
       var control = getControl(row);
-      if (!label || !control || !control.id || label.htmlFor !== control.id) return;
-      if (label.classList.contains('screen-reader-text')) return;
+      if (!control || !control.id) return;
       if (control.tagName === 'INPUT' &&
           ['text', 'email', 'tel', 'number', 'password', 'url'].indexOf(
             String(control.type || '').toLowerCase()
           ) === -1) return;
+
+      // WooCommerce deliberately hides the apartment/address-line-2 label.
+      // Restore that SAME associated label instead of adding a duplicate.
+      if (label && label.htmlFor === control.id &&
+          label.classList.contains('screen-reader-text')) {
+        var accessibleText = String(label.textContent || '').trim();
+        if (!accessibleText) {
+          accessibleText = String(control.getAttribute('placeholder') ||
+            control.getAttribute('aria-label') || '').trim();
+          if (accessibleText) label.textContent = accessibleText;
+        }
+        if (!accessibleText) return;
+        label.classList.remove('screen-reader-text');
+        label.classList.add('ehk-restored-label');
+      }
+
+      // Some checkout extensions omit the label entirely. Add a proper
+      // associated label only if the control supplies readable hint text.
+      if (!label) {
+        var hint = String(control.getAttribute('placeholder') ||
+          control.getAttribute('aria-label') || '').trim();
+        if (!hint) return;
+        label = document.createElement('label');
+        label.htmlFor = control.id;
+        label.textContent = hint;
+        label.classList.add('ehk-generated-label');
+        row.insertBefore(label, row.firstChild);
+      }
+      if (label.htmlFor !== control.id) return;
 
       row.classList.add('ehk-floating-field');
       row.classList.toggle('ehk-floating-select', control.tagName === 'SELECT');
