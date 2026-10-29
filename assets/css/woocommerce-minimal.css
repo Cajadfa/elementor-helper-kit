@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.6
+ * WooCommerce Minimal CSS — 1.1.7
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -1875,5 +1875,169 @@ body.woocommerce-page form.checkout.woocommerce-checkout #payment .place-order #
 @media (prefers-reduced-motion: reduce) {
   :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-selection__arrow b {
     transition: none;
+  }
+}
+
+
+/* 1.1.7 — scoped classic checkout/cart alignment refinements. */
+
+/*
+ * WooCommerce's coupon toggle uses slideToggle and sets an inline display.
+ * Keep that visibility behavior intact: float the two coupon rows instead
+ * of forcing display:flex/grid on the form itself.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > p:not(.form-row) {
+  clear: both;
+  width: 100%;
+}
+
+@media (min-width: 560px) {
+  :is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > .form-row-first,
+  :is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > .form-row-last {
+    box-sizing: border-box;
+    display: block;
+    clear: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  :is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > .form-row-first {
+    float: inline-start !important;
+    width: calc(100% - 162px) !important;
+  }
+
+  :is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > .form-row-last {
+    float: inline-end !important;
+    width: 150px !important;
+  }
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon .form-row-first input[name="coupon_code"] {
+  box-sizing: border-box !important;
+  display: block;
+  width: 100% !important;
+  min-height: 50px;
+  height: 50px;
+  margin: 0 !important;
+  border-radius: var(--wcm-radius-sm);
+  font-size: 14px !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon .form-row-last button[name="apply_coupon"] {
+  box-sizing: border-box !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  min-height: 50px;
+  height: 50px;
+  margin: 0 !important;
+  padding: 10px 12px !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  white-space: nowrap;
+}
+
+@media (max-width: 559px) {
+  :is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > .form-row-first,
+  :is(.woocommerce, .woocommerce-page) form.checkout_coupon.woocommerce-form-coupon > .form-row-last {
+    float: none !important;
+    width: 100% !important;
+    margin-block: 0 10px !important;
+  }
+}
+
+/* Equal width for the complete order summary: title, review table and payment. */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #order_review_heading,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #order_review,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #order_review #payment {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  margin-inline: 0 !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/*
+ * SelectWoo's native arrow borders use logical edges, which turn sideways in
+ * RTL. Replace the rotated borders with a centered SVG chevron instead.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__arrow {
+  box-sizing: border-box;
+  top: 0 !important;
+  height: 58px !important;
+  width: 30px !important;
+  inset-inline-end: 12px !important;
+  inset-inline-start: auto !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__arrow b {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  display: block !important;
+  box-sizing: border-box;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23949baa' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / 20px 20px no-repeat !important;
+  transform: translate(-50%, -50%) !important;
+  transform-origin: center;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container--open .select2-selection--single .select2-selection__arrow b {
+  transform: translate(-50%, -50%) rotate(180deg) !important;
+}
+
+/* Match Cart's Go-to-Checkout CTA to the prominent 64px Place Order button. */
+body :is(.woocommerce, .woocommerce-page) .cart-collaterals .wc-proceed-to-checkout a.checkout-button,
+body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 16px 0 0 !important;
+  padding: 17px 25px !important;
+  border: 1px solid var(--wcm-primary) !important;
+  border-radius: 12px !important;
+  background: var(--wcm-primary) !important;
+  color: var(--wcm-on-primary) !important;
+  font-family: inherit !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+  box-shadow: 0 4px 12px rgb(15 23 42 / 10%);
+}
+
+body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-button:hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover) !important;
+  background: var(--wcm-primary-hover) !important;
+  color: var(--wcm-on-primary) !important;
+}
+
+@media (max-width: 767px) {
+  body :is(.woocommerce, .woocommerce-page) .wc-proceed-to-checkout a.checkout-button {
+    min-height: 58px !important;
+    font-size: 18px !important;
   }
 }
