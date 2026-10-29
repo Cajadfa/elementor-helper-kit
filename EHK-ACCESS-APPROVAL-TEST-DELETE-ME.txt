@@ -1,0 +1,3 @@
+Temporary GitHub permission test.
+Safe to remove in the next commit.
+Created for ChatGPT tool approval troubleshooting on 2026-10-29.
