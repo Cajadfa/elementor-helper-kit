@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.4
+ * WooCommerce Minimal CSS — 1.1.5
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -1509,6 +1509,152 @@
 @media (prefers-reduced-motion: reduce) {
   :is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
     .wc-block-components-button {
+    transition: none;
+  }
+}
+
+
+/* 1.1.5 — compact floating labels for native classic checkout inputs.
+ * Classes are applied by progressive enhancement; without JS, Woo labels stay normal.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field {
+  position: relative;
+  margin-block: 0 13px;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field > label {
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: 14px;
+  top: 17px;
+  display: inline-block;
+  max-width: calc(100% - 28px);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: var(--wcm-muted);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: text;
+  transition: top .15s ease, font-size .15s ease, color .15s ease;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field .woocommerce-input-wrapper > input.input-text {
+  min-height: 52px;
+  height: 52px;
+  margin: 0;
+  padding: 23px 14px 7px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.ehk-floating-active > label {
+  top: 5px;
+  color: var(--wcm-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field:not(.ehk-floating-active) input.input-text::placeholder {
+  opacity: 0;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.ehk-floating-active input.input-text::placeholder {
+  opacity: .55;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.woocommerce-invalid > label {
+  color: var(--wcm-error);
+}
+
+/* A taller, usable customer-notes field without inflating the other inputs. */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout :is(
+  .woocommerce-additional-fields textarea,
+  #order_comments,
+  textarea.input-text
+) {
+  min-height: 174px;
+  height: 174px;
+  padding: 13px 14px;
+  font-size: 14px;
+  line-height: 1.8;
+  resize: vertical;
+}
+
+/* Coupon entry belongs at checkout only. Keep WooCommerce coupon processing intact. */
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form td.actions .coupon {
+  display: none !important;
+}
+
+/* WooCommerce enables the native update control after quantity edits.
+ * When there are no visible actions, collapse the cart table's empty final row.
+ */
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form td.actions [name="update_cart"]:disabled,
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form td.actions [name="update_cart"].disabled {
+  display: none !important;
+}
+
+@supports selector(tr:has(> td.actions)) {
+  :is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form table.shop_table tr:has(> td.actions > [name="update_cart"]:disabled),
+  :is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form table.shop_table tr:has(> td.actions > [name="update_cart"].disabled) {
+    display: none;
+  }
+}
+
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form td.actions {
+  text-align: start;
+}
+
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form td.actions [name="update_cart"]:not(:disabled):not(.disabled) {
+  float: inline-start;
+  margin: 0;
+}
+
+/* Primary CTAs: slightly stronger, still proportional to the surrounding UI. */
+:is(.woocommerce, .woocommerce-page) :is(
+  button.button, input.button, a.button, .woocommerce-button,
+  button.single_add_to_cart_button,
+  .wc-proceed-to-checkout a.checkout-button
+),
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #place_order {
+  min-height: 50px;
+  padding: 12px 21px;
+  border-color: var(--wcm-primary);
+  background: var(--wcm-primary);
+  color: var(--wcm-on-primary);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(
+  button.button, input.button, a.button, .woocommerce-button,
+  button.single_add_to_cart_button,
+  .wc-proceed-to-checkout a.checkout-button
+):hover:not(:disabled):not(.disabled),
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #place_order:hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover);
+  background: var(--wcm-primary-hover);
+  color: var(--wcm-on-primary);
+}
+
+@media (max-width: 767px) {
+  :is(.woocommerce, .woocommerce-page) :is(
+    button.button, input.button, a.button, .woocommerce-button,
+    .wc-proceed-to-checkout a.checkout-button
+  ) {
+    min-height: 46px;
+    padding: 10px 15px;
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field > label {
     transition: none;
   }
 }
