@@ -1,11 +1,12 @@
 /*!
- * WooCommerce Minimal CSS — 1.0.0
+ * WooCommerce Minimal CSS — 1.1.1
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
  * Usage: enqueue this file AFTER your theme's base stylesheet, and disable
  * only WooCommerce's classic default styles if you want a clean baseline.
- * This does NOT replace styles for Cart/Checkout Blocks or third-party plugins.
+ * WooCommerce Blocks retain their native CSS and receive only scoped visual polish.
+ * This does NOT replace styles supplied by third-party plugins.
  *
  * Customize the --wcm-* CSS variables in your theme without editing this file.
  */
@@ -1099,6 +1100,124 @@
 
 @media (prefers-reduced-motion: reduce) {
   :where(.woocommerce, .woocommerce-page) :where(.button, ul.products li.product) {
+    transition: none;
+  }
+}
+
+/*
+ * Cart and Checkout Blocks (WooCommerce's default pages on new installs).
+ * Keep the native block layout, floating-label behavior, validation and JS.
+ * These rules only add a consistent visual baseline to the block wrappers.
+ */
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout) {
+  color: var(--wcm-text);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout),
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout) *,
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout) *::before,
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout) *::after {
+  box-sizing: border-box;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-main, .wc-block-components-sidebar) {
+  min-width: 0;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-title, .wc-block-components-checkout-step__heading, .wc-block-components-order-summary__button-text) {
+  color: var(--wcm-text);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-product-name, .wc-block-components-formatted-money-amount) {
+  color: inherit;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-text-input input, .wc-block-components-combobox-control input, .wc-block-components-select select, .wc-block-components-textarea) {
+  border-color: var(--wcm-border);
+  border-radius: var(--wcm-radius-sm);
+  background-color: var(--wcm-surface);
+  color: var(--wcm-text);
+  box-shadow: none;
+  font-family: inherit;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-text-input, .wc-block-components-combobox-control, .wc-block-components-select):focus-within
+  :is(input, select) {
+  border-color: var(--wcm-primary);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-text-input, .wc-block-components-combobox-control, .wc-block-components-select) label {
+  color: var(--wcm-muted);
+  font-family: inherit;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--wcm-primary);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  .wc-block-components-button:not(.is-link) {
+  border: 1px solid var(--wcm-primary);
+  border-radius: var(--wcm-radius-sm);
+  background-color: var(--wcm-primary);
+  color: var(--wcm-on-primary);
+  box-shadow: none;
+  font-family: inherit;
+  font-weight: 600;
+  transition: background-color .16s ease, border-color .16s ease;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  .wc-block-components-button:not(.is-link):hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover);
+  background-color: var(--wcm-primary-hover);
+  color: var(--wcm-on-primary);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  .wc-block-components-button:focus-visible {
+  outline: 2px solid var(--wcm-primary);
+  outline-offset: 3px;
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-quantity-selector, .wc-block-components-order-summary, .wc-block-components-totals-wrapper) {
+  border-color: var(--wcm-border);
+  border-radius: var(--wcm-radius-sm);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-cart-items__row, .wc-block-components-order-summary-item) {
+  border-color: var(--wcm-border);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  :is(.wc-block-components-notice-banner, .wc-block-components-validation-error) {
+  border-radius: var(--wcm-radius-sm);
+}
+
+:is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+  .wc-block-components-order-summary-item__quantity {
+  border-color: var(--wcm-border);
+  background-color: var(--wcm-soft);
+  color: var(--wcm-text);
+  box-shadow: 0 0 0 2px var(--wcm-surface);
+}
+
+.wp-block-woocommerce-cart .wc-block-cart__submit-container {
+  background-color: var(--wcm-surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout)
+    .wc-block-components-button {
     transition: none;
   }
 }
