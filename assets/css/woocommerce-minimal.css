@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.5
+ * WooCommerce Minimal CSS — 1.1.6
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -1655,6 +1655,225 @@
 
 @media (prefers-reduced-motion: reduce) {
   :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field > label {
+    transition: none;
+  }
+}
+
+
+/*
+ * 1.1.6 — resilient material controls for classic checkout.
+ * Specificity and intentional !important sizing beat classic WC/theme overrides,
+ * while scoped selectors prevent interference outside WooCommerce.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field {
+  position: relative !important;
+  margin-block: 0 16px;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field .woocommerce-input-wrapper {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field > label[for] {
+  position: absolute !important;
+  z-index: 2;
+  inset-inline-start: 16px !important;
+  inset-inline-end: auto !important;
+  top: 20px !important;
+  display: block !important;
+  width: auto !important;
+  max-width: calc(100% - 60px);
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0;
+  background: transparent;
+  color: var(--wcm-muted);
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.ehk-floating-active > label[for] {
+  top: 9px !important;
+  color: var(--wcm-muted);
+  font-size: 11px !important;
+  font-weight: 650 !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field:focus-within > label[for] {
+  color: var(--wcm-primary);
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.woocommerce-invalid > label[for] {
+  color: var(--wcm-error);
+}
+
+/* Identical 58px footprint for native inputs, native selects and SelectWoo. */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field .woocommerce-input-wrapper > input.input-text:not(.qty),
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field .woocommerce-input-wrapper > select:not(.select2-hidden-accessible) {
+  box-sizing: border-box !important;
+  display: block;
+  width: 100%;
+  height: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px;
+  margin: 0 !important;
+  padding: 26px 16px 6px !important;
+  border: 1px solid var(--wcm-border);
+  border-radius: 11px;
+  background-color: var(--wcm-surface);
+  color: var(--wcm-text);
+  font-size: 14px !important;
+  font-weight: 550;
+  line-height: 1.4 !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field .woocommerce-input-wrapper > input.input-text:not(.qty):focus,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field .woocommerce-input-wrapper > select:not(.select2-hidden-accessible):focus {
+  border-color: var(--wcm-primary) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--wcm-primary) 18%, transparent);
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field:not(.ehk-floating-active) input.input-text::placeholder,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field:not(.ehk-floating-active) textarea::placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.ehk-floating-active input.input-text::placeholder,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-field.ehk-floating-active textarea::placeholder {
+  color: var(--wcm-muted);
+  opacity: .55;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-textarea .woocommerce-input-wrapper > textarea {
+  box-sizing: border-box;
+  padding: 32px 16px 12px !important;
+}
+
+/* Native select chevron (select with active SelectWoo is visually hidden). */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .woocommerce-input-wrapper > select:not(.select2-hidden-accessible) {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  padding-inline-end: 44px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2395a0b3' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: 18px 18px !important;
+  background-position: left 15px center !important;
+}
+
+:dir(ltr) :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .woocommerce-input-wrapper > select:not(.select2-hidden-accessible) {
+  background-position: right 15px center !important;
+}
+
+/* Select2 / SelectWoo: account for WooCommerce's generated single-select markup. */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container {
+  display: block;
+  width: 100% !important;
+  min-height: 58px !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single {
+  box-sizing: border-box !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  border: 1px solid var(--wcm-border) !important;
+  border-radius: 11px !important;
+  background: var(--wcm-surface) !important;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 4%);
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__rendered {
+  box-sizing: border-box !important;
+  display: block;
+  height: 56px !important;
+  padding-block: 28px 5px !important;
+  padding-inline: 16px 43px !important;
+  color: var(--wcm-text);
+  font-size: 14px !important;
+  font-weight: 550;
+  line-height: 21px !important;
+  text-align: start;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container .select2-selection--single .select2-selection__arrow {
+  position: absolute !important;
+  top: 0 !important;
+  inset-inline-end: 12px !important;
+  inset-inline-start: auto !important;
+  width: 26px !important;
+  height: 56px !important;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-selection__arrow b {
+  display: block;
+  width: 9px !important;
+  height: 9px !important;
+  margin: -6px 0 0 -4px !important;
+  border: 0 !important;
+  border-inline-end: 2px solid var(--wcm-muted) !important;
+  border-block-end: 2px solid var(--wcm-muted) !important;
+  transform: rotate(45deg);
+  transition: transform .15s ease;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container--open .select2-selection__arrow b {
+  transform: rotate(225deg);
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container--focus .select2-selection--single,
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-container--open .select2-selection--single {
+  border-color: var(--wcm-primary) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--wcm-primary) 18%, transparent) !important;
+}
+
+/* Stronger checkout CTA: intentionally override WooCommerce/theme button CSS. */
+body :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #payment .place-order #place_order,
+body.woocommerce-page form.checkout.woocommerce-checkout #payment .place-order #place_order {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin-block-start: 18px !important;
+  padding: 17px 25px !important;
+  border: 1px solid var(--wcm-primary) !important;
+  border-radius: 12px !important;
+  background: var(--wcm-primary) !important;
+  color: var(--wcm-on-primary) !important;
+  font-family: inherit !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  line-height: 1.55 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  box-shadow: 0 4px 12px rgb(15 23 42 / 10%);
+}
+
+body :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #payment .place-order #place_order:hover:not(:disabled),
+body.woocommerce-page form.checkout.woocommerce-checkout #payment .place-order #place_order:hover:not(:disabled) {
+  border-color: var(--wcm-primary-hover) !important;
+  background: var(--wcm-primary-hover) !important;
+  color: var(--wcm-on-primary) !important;
+}
+
+@media (max-width: 767px) {
+  body :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #payment .place-order #place_order {
+    min-height: 58px !important;
+    font-size: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .form-row.ehk-floating-select .select2-selection__arrow b {
     transition: none;
   }
 }
