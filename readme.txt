@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,13 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.12 =
+- Make the primary classic single-product Add to Cart button full-width beneath quantity controls, matching the established 64px checkout CTA and supporting variation purchase forms.
+- Remove unwanted text underlines on single-product WooCommerce tab links while keeping the active-tab indicator.
+- Render clickable review rating stars with native Unicode glyphs (no icon-font dependency), supporting hover, selected values, and keyboard focus while preserving WooCommerce's existing anchor handlers.
+- Give the single-product review submission button an accessible, proportionate minimum 160px by 52px size with stronger typography.
+- All changes remain limited to classic single-product pages while WooCommerce Minimal Styles is enabled.
 
 = 1.1.11 =
 - Show WooCommerce's existing screen-reader-only labels as material floating labels for optional classic checkout inputs such as address line 2, preserving the native label/input association.
