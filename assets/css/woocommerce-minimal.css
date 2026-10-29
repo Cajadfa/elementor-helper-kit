@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.12
+ * WooCommerce Minimal CSS — 1.1.13
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -631,13 +631,12 @@
 :where(.woocommerce, .woocommerce-page).single-product :where(.woocommerce-tabs ul.tabs li a) {
   display: block;
   padding: 12px 3px;
-  border-block-end: 2px solid transparent;
+  border-block-end: 0;
   color: var(--wcm-muted);
   font-weight: 600;
 }
 
 :where(.woocommerce, .woocommerce-page).single-product :where(.woocommerce-tabs ul.tabs li.active a) {
-  border-block-end-color: var(--wcm-primary);
   color: var(--wcm-text);
 }
 
@@ -2477,4 +2476,49 @@ div.product .woocommerce-tabs ul.tabs li a:is(:hover, :focus, :active, :visited)
   #reviews #review_form p.stars span a::before {
     transition: none;
   }
+}
+
+
+/* 1.1.13 — remove link underlines AND active borders from classic WC UI.
+ * Removing text-decoration alone does not remove the 2px active tab border.
+ * Keep active text color and backgrounds, and keyboard focus outlines.
+ */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li a,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li a:is(:hover, :focus, :active, :visited) {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: 0 !important;
+  border-block-end: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Some themes draw the active-tab underline on the li or a pseudo-element. */
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li:is(.active, :hover) {
+  border-bottom: 0 !important;
+  border-block-end: 0 !important;
+}
+
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li::before,
+:is(body.single-product.woocommerce, body.single-product .woocommerce, body.single-product .woocommerce-page)
+div.product .woocommerce-tabs ul.tabs li::after {
+  content: none !important;
+}
+
+/* Cart's remove (×) is a link, not a form button. Neutralize theme link
+ * text decorations and bottom borders without changing the WC remove action.
+ */
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form .product-remove a.remove,
+:is(.woocommerce, .woocommerce-page) form.woocommerce-cart-form .product-remove a.remove:is(:hover, :focus, :active, :visited),
+:is(.woocommerce, .woocommerce-page) table.shop_table .product-remove a.remove {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: 0 !important;
+  border-block-end: 0 !important;
+  box-shadow: none !important;
 }
