@@ -1,5 +1,5 @@
 /*!
- * WooCommerce Minimal CSS — 1.1.1
+ * WooCommerce Minimal CSS — 1.1.3
  * A small, theme-neutral baseline for WooCommerce classic PHP templates.
  * RTL/LTR friendly, no external fonts, JavaScript, or CSS framework.
  *
@@ -28,6 +28,8 @@
   --wcm-radius-sm: 8px;
   --wcm-gap: 20px;
   --wcm-shadow: 0 7px 24px rgb(15 23 42 / 5%);
+  --wcm-checkout-text-size: 14px;
+  --wcm-checkout-control-size: 14px;
 }
 
 /* These rules are scoped to the classic WooCommerce output. */
@@ -847,6 +849,87 @@
   float: none;
   width: 100%;
   margin-block-start: 14px;
+}
+
+/*
+ * Classic checkout typography guardrails.
+ * These scoped rules have non-zero specificity so generic theme controls and
+ * nonstandard root rem sizes cannot inflate classic checkout UI.
+ */
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout {
+  font-size: var(--wcm-checkout-text-size);
+  line-height: 1.8;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout :is(
+  .form-row label, .woocommerce-form__label-for-checkbox
+) {
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout :is(
+  input.input-text, input[type="text"], input[type="email"],
+  input[type="tel"], input[type="number"], select
+) {
+  height: auto;
+  min-height: 43px;
+  padding: 10px 13px;
+  font-size: var(--wcm-checkout-control-size);
+  line-height: 1.5;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout textarea {
+  min-height: 120px;
+  padding: 10px 13px;
+  font-size: var(--wcm-checkout-control-size);
+  line-height: 1.6;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout :is(input, textarea)::placeholder {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .select2-container .select2-selection--single {
+  height: 43px;
+  min-height: 43px;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout .select2-container .select2-selection__rendered {
+  font-size: var(--wcm-checkout-control-size);
+  line-height: 41px;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(.woocommerce-info, .woocommerce-error, .woocommerce-message) {
+  font-size: var(--wcm-checkout-text-size);
+  line-height: 1.8;
+}
+
+:is(.woocommerce, .woocommerce-page) :is(.woocommerce-info, .woocommerce-error, .woocommerce-message) :is(a, button) {
+  font-size: inherit;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #payment {
+  font-size: var(--wcm-checkout-text-size);
+  line-height: 1.8;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #payment :is(
+  ul.payment_methods, ul.payment_methods li, ul.payment_methods li p,
+  .woocommerce-notice, .woocommerce-info, .payment_box,
+  .place-order, .place-order p, .woocommerce-privacy-policy-text,
+  .woocommerce-privacy-policy-text p, .woocommerce-privacy-policy-text a
+) {
+  font-size: var(--wcm-checkout-text-size);
+  line-height: 1.8;
+}
+
+:is(.woocommerce, .woocommerce-page) form.checkout.woocommerce-checkout #place_order {
+  min-height: 44px;
+  padding: 11px 18px;
+  font-size: var(--wcm-checkout-control-size);
+  line-height: 1.5;
 }
 
 :where(.woocommerce, .woocommerce-page) :where(.woocommerce-invalid input.input-text, .woocommerce-invalid select) {
