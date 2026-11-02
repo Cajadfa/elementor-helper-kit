@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.15
+Stable tag: 1.1.16
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,14 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.16 =
+- Add a separate, default-OFF WooCommerce Admin Test Gateway toggle under Settings > Elementor Helper Kit (shown only while WooCommerce is active).
+- Register an actual classic WooCommerce payment method available exclusively to logged-in site administrators with manage_options. The same authorization is enforced at checkout validation and payment processing, not just via a hidden UI.
+- Intercept an administrator's Place Order action when the test gateway is selected and show a responsive keyboard-friendly modal: Simulate Success, Simulate Failure or Cancel. Native WooCommerce checkout AJAX/validation remains in charge of submitting orders.
+- For simulated success, mark the real WooCommerce order paid using payment_complete(), empty the cart and redirect to the normal order-received page. For simulated failure, mark the actual order failed and display a checkout error notice; record test outcome as order metadata and in order notes.
+- No real payment provider is called. IMPORTANT: successful test orders can affect stock quantities, transactional emails and sales reporting. Use only test orders/products and preferably a staging store.
+- This gateway is for classic PHP/shortcode checkout; it is not registered as a Checkout Block payment-method integration. It remains independent from the WooCommerce Minimal Styles switch.
 
 = 1.1.15 =
 - Replace the default browser arrow on the native classic WooCommerce shop sorting dropdown with a lightweight modern SVG chevron matching the Minimal UI Kit.
