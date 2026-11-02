@@ -23,6 +23,7 @@ class EHK_Settings {
 			'hide_frontend_admin_bar'   => 1,
 			'elementor_cache_toolbar'   => 1,
 			'woocommerce_minimal_styles' => 0,
+			'woocommerce_test_gateway' => 0,
 			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 			'woocommerce_color_mode'   => 'light',
 			'woocommerce_cart_button_text_enabled' => 0,
@@ -63,6 +64,10 @@ class EHK_Settings {
 
 	public static function elementor_cache_toolbar_enabled() {
 		return (bool) self::get( 'elementor_cache_toolbar', 1 );
+	}
+
+	public static function woocommerce_test_gateway_enabled() {
+		return (bool) self::get( 'woocommerce_test_gateway', 0 );
 	}
 
 	public static function woocommerce_minimal_styles_enabled() {
@@ -129,6 +134,7 @@ class EHK_Settings {
 					'hide_frontend_admin_bar' => 1,
 					'elementor_cache_toolbar' => 1,
 					'woocommerce_minimal_styles' => 0,
+					'woocommerce_test_gateway' => 0,
 					'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 					'woocommerce_color_mode' => 'light',
 					'woocommerce_cart_button_text_enabled' => 0,
@@ -147,6 +153,7 @@ class EHK_Settings {
 			'hide_frontend_admin_bar' => empty( $input['hide_frontend_admin_bar'] ) ? 0 : 1,
 			'elementor_cache_toolbar' => empty( $input['elementor_cache_toolbar'] ) ? 0 : 1,
 			'woocommerce_minimal_styles' => empty( $input['woocommerce_minimal_styles'] ) ? 0 : 1,
+			'woocommerce_test_gateway' => empty( $input['woocommerce_test_gateway'] ) ? 0 : 1,
 			'woocommerce_primary_color' => self::normalize_primary_color( isset( $input['woocommerce_primary_color'] ) ? $input['woocommerce_primary_color'] : self::woocommerce_primary_color() ),
 			'woocommerce_color_mode' => isset( $input['woocommerce_color_mode'] ) && 'dark' === $input['woocommerce_color_mode'] ? 'dark' : 'light',
 			'woocommerce_cart_button_text_enabled' => empty( $input['woocommerce_cart_button_text_enabled'] ) ? 0 : 1,
@@ -164,6 +171,7 @@ class EHK_Settings {
 		$hide_admin_bar_enabled      = self::hide_frontend_admin_bar_enabled();
 		$cache_toolbar_enabled       = self::elementor_cache_toolbar_enabled();
 		$woocommerce_minimal_enabled = self::woocommerce_minimal_styles_enabled();
+		$woocommerce_test_gateway    = self::woocommerce_test_gateway_enabled();
 		$woocommerce_primary_color   = self::woocommerce_primary_color();
 		$woocommerce_color_mode      = self::woocommerce_color_mode();
 		$cart_button_text_enabled    = self::custom_cart_button_text_enabled();
@@ -330,6 +338,28 @@ class EHK_Settings {
 					</div>
 
 				</div>
+
+				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+				<div class="ehk-card">
+					<div class="ehk-card-head">
+						<div>
+							<h2>WooCommerce Admin Test Gateway</h2>
+							<p>درگاه آزمایشی برای بررسی روند پرداخت موفق و ناموفق، فقط در تسویه‌حساب مدیر سایت.</p>
+						</div>
+						<label class="ehk-switch">
+							<input type="checkbox"
+								name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_test_gateway]"
+								value="1" <?php checked( $woocommerce_test_gateway ); ?> />
+							<span class="ehk-slider" aria-hidden="true"></span>
+						</label>
+					</div>
+					<p class="ehk-note">
+						<strong>خاموش (پیش‌فرض):</strong> هیچ درگاه آزمایشی ثبت نمی‌شود.<br>
+						<strong>روشن:</strong> فقط کاربران واردشده با دسترسی مدیر سایت (<code>manage_options</code>) در Checkout کلاسیک گزینه «درگاه آزمایشی» می‌بینند. پس از زدن ثبت سفارش می‌توانند پرداخت موفق یا ناموفق را انتخاب کنند.<br>
+						<strong>هشدار:</strong> هیچ مبلغ واقعی دریافت نمی‌شود، ولی <strong>سفارش واقعی ووکامرس</strong> ساخته خواهد شد. شبیه‌سازی موفق می‌تواند موجودی انبار، ایمیل‌های سفارش و آمار فروش را تحت تأثیر قرار دهد. برای تست با داده آزمایشی استفاده کنید.
+					</p>
+				</div>
+				<?php endif; ?>
 
 				<div class="ehk-card">
 					<h2>Elementor JSON Editor</h2>
