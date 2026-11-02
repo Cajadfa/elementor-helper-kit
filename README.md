@@ -2,12 +2,21 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.15`  
+**Current version:** `1.1.16`  
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
 
 - Classic WooCommerce shop sorting now uses a compact SVG chevron instead of the browser-native dropdown arrow, with RTL/LTR-aware positioning and a 50px minimal control.
+
+### WooCommerce Admin Test Gateway (optional)
+
+- **Off by default.** When WooCommerce is active, enable it in **Settings → Elementor Helper Kit → WooCommerce Admin Test Gateway**.
+- In **classic shortcode/PHP checkout**, only logged-in WordPress site administrators (`manage_options`) see **درگاه تست (فقط مدیر)**.
+- Select that payment method and click **ثبت سفارش**. A dialog offers **پرداخت موفق**, **پرداخت ناموفق**, and **انصراف و بازگشت**. WooCommerce continues to validate and submit the real checkout form.
+- Simulated success calls WooCommerce `payment_complete()`, redirects to the normal order confirmation, and can affect stock, notification emails, and sales metrics. Simulated failure marks the order **failed**, and shows an error notice. No external payment is made.
+- The backend enforces the admin permission and enabled setting even for direct POST requests; ordinary customers do not see or use the test gateway.
+- **Important:** The result is a real WooCommerce test **order**, not a fake preview; prefer staging / test products. Checkout Blocks are not supported by this classic gateway.
 
 ## Features
 
