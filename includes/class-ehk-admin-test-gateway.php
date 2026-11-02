@@ -15,7 +15,7 @@ class EHK_Admin_Test_Gateway_Bootstrap {
 
 		add_filter( 'woocommerce_payment_gateways', array( __CLASS__, 'register_gateway' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ), 110 );
-		add_action( 'wp_footer', array( __CLASS__, 'render_dialog' ), 20 );
+		add_action( 'wp_footer', array( __CLASS__, 'render_dialog' ), 5 );
 	}
 
 	/** A forged checkout POST from a non-admin must never use this gateway. */
