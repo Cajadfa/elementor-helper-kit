@@ -26,6 +26,7 @@ require_once EHK_DIR . 'includes/class-ehk-settings.php';
 require_once EHK_DIR . 'includes/class-ehk-motion.php';
 require_once EHK_DIR . 'includes/class-ehk-style-priority.php';
 require_once EHK_DIR . 'includes/class-ehk-woocommerce-styles.php';
+require_once EHK_DIR . 'includes/class-ehk-admin-test-gateway.php';
 require_once EHK_DIR . 'includes/class-ehk-json-editor.php';
 require_once EHK_DIR . 'includes/class-ehk-admin-tools.php';
 require_once EHK_DIR . 'includes/class-ehk-updater.php';
@@ -37,6 +38,7 @@ add_action( 'plugins_loaded', function () {
 	EHK_Motion::init();
 	EHK_Style_Priority::init();
 	EHK_WooCommerce_Styles::init();
+	EHK_Admin_Test_Gateway_Bootstrap::init();
 	EHK_JSON_Editor::init();
 	EHK_Admin_Tools::init();
 	EHK_Updater::init();
