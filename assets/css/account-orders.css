@@ -1,0 +1,518 @@
+/**
+ * The QQ Account template does not use .ehk-site, so these styles are
+ * scoped to the officially registered orders route on the account page.
+ */
+body.qqa-account-page #orders .ehk-account-orders {
+  --ehk-orders-border: var(--qqa-border, rgba(118,76,143,.16));
+  --ehk-orders-surface: var(--qqa-surface, rgba(255,255,255,.95));
+  --ehk-orders-text: var(--qqa-text,var(--qq-text, #311d3b));
+  --ehk-orders-hover: rgba(133,81,166,.08);
+  color:var(--ehk-orders-text);
+  direction:rtl;
+}
+body.qqa-account-page #orders .ehk-orders-surface{
+  max-width:1020px;
+  margin:16px auto 32px;
+  border:1px solid var(--ehk-orders-border);
+  border-radius:26px;
+  padding:clamp(18px,3vw,30px);
+  background:var(--ehk-orders-surface);
+  box-shadow:var(--ehk-qq-panel-shadow,0 12px 36px rgba(67,37,82,.075));
+}
+body.qqa-account-page #orders .ehk-orders-rows{
+  display:grid;gap:11px;
+}
+body.qqa-account-page #orders .ehk-order-row {
+  box-sizing:border-box;
+  display:flex;align-items:center;gap:12px;
+  width:100%;min-height:66px;padding:13px 18px;
+  border:1px solid var(--ehk-orders-border);
+  border-radius:16px;
+  background:var(--qq-surface,rgba(255,255,255,.5));
+  color:var(--ehk-orders-text);
+  font:inherit;text-align:right;cursor:pointer;
+  transition:border-color .24s ease,box-shadow .24s ease,background-color .24s ease,transform .24s ease;
+}
+body.qqa-account-page #orders .ehk-order-row:hover {
+  background:var(--ehk-orders-hover);
+  border-color:var(--qq-brand-primary,#7844a0);
+  box-shadow:0 8px 24px rgba(69,35,92,.075);
+  transform:translateY(-1px);
+}
+body.qqa-account-page #orders .ehk-order-row:focus-visible,
+body.qqa-account-page #orders .ehk-order-back:focus-visible {
+  outline:2px solid var(--qq-brand-focus,#8551a6);
+  outline-offset:3px;
+}
+body.qqa-account-page #orders .ehk-order-number {
+  font-weight:700;
+  font-feature-settings:"ss01" 1;
+}
+body.qqa-account-page #orders .ehk-order-status {
+  margin-inline-start:auto;
+  font-size:.88rem;
+  color:var(--qq-brand-primary,#7844a0);
+  background:rgba(133,81,166,.095);
+  border-radius:999px;
+  padding:7px 13px;
+  white-space:nowrap;
+}
+body.qqa-account-page #orders .ehk-order-row svg{
+  width:19px;height:19px;flex:none;
+  color:var(--qq-brand-primary,#7844a0);
+}
+body.qqa-account-page #orders .ehk-orders-empty {
+  text-align:center;line-height:2;
+  padding:20px 8px;
+  color:var(--qq-text-secondary,var(--ehk-orders-text));
+}
+body.qqa-account-page #orders .ehk-orders-pagination{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:20px;flex-wrap:wrap;
+}
+body.qqa-account-page #orders .ehk-orders-pagination a{
+  text-decoration:none;border-radius:12px;
+}
+/* QQ section heading: active order number to the right, back above left.
+ * Remove the deleted duplicate order-number/status boxes completely. */
+body.qqa-account-page #orders .ehk-orders-header{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px;
+  width:100%;
+  min-width:0;
+}
+body.qqa-account-page #orders .ehk-orders-header > [data-ehk-orders-heading]{
+  flex:1 1 auto;
+  margin:0!important;
+  min-width:0;
+  text-align:right;
+  font-feature-settings:"ss01" 1;
+}
+body.qqa-account-page #orders .ehk-orders-header > .ehk-order-back{
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:0;
+  padding:11px 15px;
+  border-radius:12px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+body.qqa-account-page #orders .ehk-orders-header > .ehk-order-back[hidden]{
+  display:none!important;
+}
+body.qqa-account-page #orders .ehk-orders-header > .ehk-order-back svg{
+  flex:none;
+}
+/* Order status matches the Prince violet buttons but is a read-only label. */
+body.qqa-account-page #orders .ehk-orders-header > .ehk-order-header-status{
+  box-sizing:border-box;
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:42px;
+  margin:0;
+  padding:9px 16px;
+  border-radius:12px;
+  border:1px solid rgba(153,100,193,.25);
+  background:linear-gradient(125deg,#4b1d6d,#7844a0);
+  box-shadow:0 5px 13px rgba(75,29,109,.13);
+  color:#fff!important;
+  font-size:.84rem;
+  font-weight:720;
+  line-height:1.6;
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:text;
+  font-feature-settings:"ss01" 1;
+}
+body.qqa-account-page #orders .ehk-orders-header > .ehk-order-header-status[hidden]{
+  display:none!important;
+}
+
+body.qqa-account-page #orders [hidden]{display:none!important}
+@media(max-width:580px){
+  body.qqa-account-page #orders .ehk-orders-surface{
+    border-radius:20px;padding:18px 13px;
+  }
+  body.qqa-account-page #orders .ehk-order-row{padding:13px 12px}
+  body.qqa-account-page #orders .ehk-order-status{padding:7px 9px;font-size:.8rem}
+}
+@media(prefers-reduced-motion:reduce){
+  body.qqa-account-page #orders .ehk-order-row{transition:none;transform:none}
+}
+
+
+/* Prince 1.10.6 — order cards with purchased products in the list, plus
+   owner-only order lines and shipping information in the same QQ tab. */
+body.qqa-account-page #orders .ehk-order-row{
+  min-height:96px;
+  padding:17px 19px;
+  gap:16px;
+}
+body.qqa-account-page #orders .ehk-order-row-main{
+  display:flex;
+  flex:1 1 auto;
+  min-width:0;
+  flex-direction:column;
+  gap:9px;
+  align-items:flex-start;
+  line-height:1.6;
+}
+body.qqa-account-page #orders .ehk-orders-item-previews{
+  display:flex;
+  gap:5px 12px;
+  flex-wrap:wrap;
+  align-items:center;
+  max-width:100%;
+  color:var(--qq-text-secondary,#74677a);
+  font-size:.84rem;
+  font-weight:400;
+}
+body.qqa-account-page #orders .ehk-orders-preview-item{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:3px 10px;
+  min-width:0;
+  max-width:100%;
+}
+body.qqa-account-page #orders .ehk-orders-preview-summary{
+  font-size:.79rem;
+  font-weight:500;
+  color:var(--qq-text-secondary,#796982);
+  white-space:normal;
+  line-height:1.7;
+}
+body.qqa-account-page #orders .ehk-orders-preview-name{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:190px;
+}
+body.qqa-account-page #orders .ehk-orders-preview-item small{
+  font-size:.85em;
+  color:var(--qq-brand-primary,#7844a0);
+  white-space:nowrap;
+}
+body.qqa-account-page #orders .ehk-orders-preview-more{
+  font-size:.78rem;
+  white-space:nowrap;
+}
+body.qqa-account-page #orders .ehk-order-status{
+  margin-inline-start:auto;
+  flex-shrink:0;
+}
+body.qqa-account-page #orders .ehk-order-selected{
+  padding-top:5px;
+}
+body.qqa-account-page #orders .ehk-orders-full{
+  padding-top:26px;
+}
+body.qqa-account-page #orders .ehk-orders-section-title{
+  margin:0 0 15px;
+  color:var(--qqa-text,var(--qq-text,#311d3b));
+  font-size:1.04rem;
+  font-weight:800;
+  line-height:1.7;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-items{
+  display:grid;
+  gap:11px;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-item{
+  display:grid;
+  grid-template-columns:75px minmax(0,1fr) auto;
+  align-items:center;
+  gap:16px;
+  border:1px solid var(--ehk-orders-border);
+  border-radius:18px;
+  padding:13px;
+  background:var(--qqa-surface,rgba(255,255,255,.62));
+}
+body.qqa-account-page #orders .ehk-orders-purchased-thumb{
+  width:75px;height:75px;
+  border-radius:13px;
+  overflow:hidden;
+  background:#f4edf8;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-thumb img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-info{
+  min-width:0;
+  display:grid;
+  gap:5px;
+  align-content:center;
+}
+body.qqa-account-page #orders .ehk-orders-product-title{
+  color:var(--ehk-orders-text);
+  font-weight:750;
+  overflow-wrap:anywhere;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-meta{
+  color:var(--qq-text-secondary,#796982);
+  font-size:.83rem;
+  line-height:1.8;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-meta ul.wc-item-meta{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-meta li{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin:3px 0;
+}
+body.qqa-account-page #orders .ehk-orders-purchased-meta p{
+  margin:0;
+  display:inline;
+}
+body.qqa-account-page #orders .ehk-orders-product-qty{
+  font-size:.86rem;
+  color:var(--qq-brand-primary,#7844a0);
+}
+body.qqa-account-page #orders .ehk-orders-purchased-price{
+  font-weight:750;
+  white-space:nowrap;
+  color:var(--qq-brand-primary,#7844a0);
+}
+body.qqa-account-page #orders .ehk-orders-order-total{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+  margin:15px 0 27px;
+  padding:19px 21px;
+  border-radius:16px;
+  background:rgba(133,81,166,.08);
+  color:var(--ehk-orders-text);
+}
+body.qqa-account-page #orders .ehk-orders-order-total strong{
+  font-size:1.06rem;
+  color:var(--qq-brand-primary,#7844a0);
+}
+body.qqa-account-page #orders .ehk-orders-address-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  gap:16px;
+}
+body.qqa-account-page #orders .ehk-orders-address-card{
+  border:1px solid var(--ehk-orders-border);
+  border-radius:19px;
+  padding:19px;
+  background:var(--qqa-surface,rgba(255,255,255,.55));
+  min-width:0;
+}
+body.qqa-account-page #orders .ehk-orders-address-card address{
+  margin:0 0 15px;
+  font-style:normal;
+  line-height:2.1;
+  font-size:.93rem;
+  overflow-wrap:anywhere;
+}
+body.qqa-account-page #orders .ehk-orders-contact{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:start;
+  gap:7px 12px;
+  border-top:1px solid var(--ehk-orders-border);
+  margin:0;
+  padding:11px 0;
+  color:var(--qq-text-secondary,#73637b);
+  font-size:.85rem;
+}
+body.qqa-account-page #orders .ehk-orders-contact b{
+  color:var(--ehk-orders-text);
+  text-align:right;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+body.qqa-account-page #orders .ehk-orders-customer-note{
+  padding:14px;
+  border:1px dashed var(--ehk-orders-border);
+  border-radius:13px;
+  margin:10px 0 0;
+  font-size:.87rem;
+  line-height:1.9;
+}
+body.qqa-account-page #orders .ehk-orders-customer-note span{
+  display:block;
+  font-weight:750;
+}
+body.qqa-account-page #orders .ehk-orders-facts{
+  display:grid;
+  gap:5px;
+}
+body.qqa-account-page #orders .ehk-orders-facts>div{
+  display:flex;
+  align-items:start;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:11px 0;
+  border-bottom:1px solid var(--ehk-orders-border);
+  color:var(--qq-text-secondary,#73637b);
+  font-size:.87rem;
+}
+body.qqa-account-page #orders .ehk-orders-facts>div:last-child{
+  border-bottom:0;
+}
+body.qqa-account-page #orders .ehk-orders-facts strong{
+  color:var(--ehk-orders-text);
+  font-size:.9rem;
+  overflow-wrap:anywhere;
+}
+body.qqa-account-page #orders .ehk-orders-not-available{
+  color:var(--qq-text-secondary,#73637b);
+  line-height:1.9;
+}
+body.qqa-account-page #orders [data-ehk-order-detail-id][hidden]{
+  display:none!important;
+}
+@media(max-width:760px){
+  body.qqa-account-page #orders .ehk-orders-address-grid{grid-template-columns:1fr}
+  body.qqa-account-page #orders .ehk-orders-purchased-item{
+    grid-template-columns:61px minmax(0,1fr);
+    gap:11px;
+  }
+  body.qqa-account-page #orders .ehk-orders-purchased-thumb{width:61px;height:61px}
+  body.qqa-account-page #orders .ehk-orders-purchased-price{
+    grid-column:2;
+    justify-self:start;
+  }
+}
+@media(max-width:520px){
+  body.qqa-account-page #orders .ehk-order-row{padding:13px 12px}
+  body.qqa-account-page #orders .ehk-orders-preview-name{max-width:130px}
+  body.qqa-account-page #orders .ehk-order-row svg{width:15px}
+  body.qqa-account-page #orders .ehk-orders-address-card{padding:15px}
+  body.qqa-account-page #orders .ehk-orders-detail{
+    display:flex;flex-direction:column;align-items:flex-start;
+  }
+}
+
+
+/* Prince 1.10.7 — readable Jalali dates and each order's exact Woo total
+   inside the order-list row, not in a detached summary. */
+body.qqa-account-page #orders .ehk-order-row-main{
+  min-width:0;
+  flex:1 1 auto;
+}
+body.qqa-account-page #orders .ehk-order-row-date{
+  color:var(--qq-text-secondary,#796b81);
+  font-size:.8rem;
+  font-weight:500;
+  line-height:1.5;
+  font-feature-settings:"ss01" 1;
+}
+body.qqa-account-page #orders .ehk-order-row-total{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  align-items:flex-start;
+  margin-inline:8px 0;
+  padding:5px 13px;
+  border-inline-start:1px solid var(--ehk-orders-border,rgba(118,76,143,.16));
+  line-height:1.6;
+}
+body.qqa-account-page #orders .ehk-order-row-total small{
+  font-size:.75rem;
+  color:var(--qq-text-secondary,#796b81);
+  font-weight:500;
+}
+body.qqa-account-page #orders .ehk-order-row-total strong{
+  font-size:.92rem;
+  font-weight:800;
+  color:var(--qq-brand-primary,#7844a0);
+  white-space:nowrap;
+  font-feature-settings:"ss01" 1;
+}
+@media(max-width:700px){
+  body.qqa-account-page #orders .ehk-order-row{
+    flex-wrap:wrap;
+    row-gap:12px;
+  }
+  body.qqa-account-page #orders .ehk-order-row-main{
+    flex:1 1 calc(100% - 55px);
+  }
+  body.qqa-account-page #orders .ehk-order-row-total{
+    order:3;
+    flex:1 1 auto;
+    width:100%;
+    margin:0;
+    padding:9px 0 0;
+    border-inline-start:0;
+    border-top:1px solid var(--ehk-orders-border,rgba(118,76,143,.16));
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+  }
+}
+
+@media(max-width:600px){
+  body.qqa-account-page #orders .ehk-orders-header{gap:8px}
+  body.qqa-account-page #orders .ehk-orders-header > [data-ehk-orders-heading]{font-size:1.23rem}
+  body.qqa-account-page #orders .ehk-orders-header > .ehk-order-back{padding:9px 11px;font-size:.79rem}
+  body.qqa-account-page #orders .ehk-orders-header > .ehk-order-back svg{width:15px;height:15px}
+  body.qqa-account-page #orders .ehk-orders-header > .ehk-order-header-status{
+    min-height:38px;
+    padding:8px 11px;
+    font-size:.76rem;
+  }
+}
+
+
+/* Prince 1.10.9: the WooCommerce success confirmation is displayed once
+   at the top of the selected, customer-owned order inside QQ Account. */
+body.qqa-account-page #orders .ehk-order-selected > p.ehk-orders-success-once {
+  box-sizing:border-box;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin:0 0 25px!important;
+  padding:26px clamp(17px,3vw,28px)!important;
+  border:1px solid #d7b4ef;
+  border-radius:21px;
+  background:radial-gradient(ellipse at 90% 15%,rgba(195,135,238,.18),transparent 52%),#fbf4ff;
+  box-shadow:0 10px 29px rgba(75,29,109,.07);
+  color:#4b1d6d!important;
+  font-size:clamp(.95rem,1.4vw,1.16rem)!important;
+  font-weight:750;
+  line-height:1.85;
+  text-align:center;
+  direction:rtl;
+}
+body.qqa-account-page #orders .ehk-order-selected > p.ehk-orders-success-once::before{
+  content:"✓";
+  display:grid;
+  place-items:center;
+  width:43px;height:43px;
+  border-radius:50%;
+  background:linear-gradient(130deg,#7844a0,#4b1d6d);
+  color:#fff;
+  font-size:25px;
+  font-weight:800;
+  line-height:1;
+  box-shadow:0 6px 16px rgba(75,29,109,.16);
+}
+body.qqa-account-page #orders .ehk-order-selected > p.ehk-orders-success-once[hidden]{
+  display:none!important;
+}
+

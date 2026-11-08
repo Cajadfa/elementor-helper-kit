@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.16`  
+**Current version:** `1.1.17`
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -181,3 +181,33 @@ The JSON editor intentionally keeps the legacy `_eje_backups` meta key, so backu
 ## License
 
 GPL-2.0-or-later
+
+
+
+## WooCommerce currency and QQ Account orders (1.1.17)
+
+Two independent, default-ON controls are available under **Settings → Elementor Helper Kit**. Neither requires Elementor or WooCommerce Minimal Styles.
+
+| Setting | Visible and effective when | Behavior |
+| --- | --- | --- |
+| اصلاح مکان تومان یا ریال در ووکامرس | WooCommerce is active and store currency is `IRT` or `IRR` | `woocommerce_price_format` outputs amount, nonbreaking space, currency. Scoped RTL price CSS keeps the currency visually to the left. No conversion or saved WooCommerce setting changes. |
+| نمایش سفارش در QQ Account | WooCommerce and QQ Account are active | Adds the owner-only `orders` section through `qqa_account_sections`, 15 orders per page, inline details, purchased-item metadata, Jalali dates and Persian visible digits. |
+
+Existing installations also default to ON when these keys have never been saved. An explicitly saved OFF remains OFF. Saving while a dependency is unavailable preserves the hidden option's previous choice. Other currencies retain the configured WooCommerce format; disabling orders removes the tab, scripts and paid-order redirect.
+
+Orders use QQ Account's configured `qqa_account_page_id` permalink (including subdirectory installations), falling back to `/account/`. Successful `processing`/`completed` orders redirect only for their logged-in owner with a matching WooCommerce order key. Guests, unpaid/failed orders and other customers' orders remain on the native receipt. The existing one-time confirmation markers are preserved during migration. Access uses WooCommerce order APIs, compatible with HPOS.
+
+Implementation: `includes/class-ehk-commerce.php`, `includes/commerce/`, `assets/js/account-orders.js`, `assets/css/account-orders.css`, and `assets/css/iranian-currency.css`. PHP helpers use the `ehk_` prefix. No Prince theme functions or Perfume Suite plugin are required. Saved perfume metadata remains readable when present; ordinary orders show a quantity summary.
+
+### Migrating from Prince Elementor
+
+Update **Elementor Helper Kit to 1.1.17 first**, then **Prince Elementor to 1.10.10**. The theme no longer owns the two integrations. The helper also retires the old Prince hook callbacks while an older theme version is still installed, preventing duplicate registration. The Perfume Suite bottle-price markup and CSS are unchanged. Native WooCommerce receipt styling/date presentation remain in the theme.
+
+Focused checks (no WordPress installation required):
+
+```sh
+php tests/commerce-settings-contract.php
+php tests/account-orders-contract.php
+php tests/order-received-redirect-contract.php
+node tests/account-orders-ui.test.js
+```

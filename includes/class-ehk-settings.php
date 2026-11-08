@@ -24,6 +24,8 @@ class EHK_Settings {
 			'elementor_cache_toolbar'   => 1,
 			'woocommerce_minimal_styles' => 0,
 			'woocommerce_test_gateway' => 0,
+			'woocommerce_iranian_currency' => 1,
+			'qq_account_orders' => 1,
 			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 			'woocommerce_color_mode'   => 'light',
 			'woocommerce_cart_button_text_enabled' => 0,
@@ -68,6 +70,25 @@ class EHK_Settings {
 
 	public static function woocommerce_test_gateway_enabled() {
 		return (bool) self::get( 'woocommerce_test_gateway', 0 );
+	}
+
+	/** Dependencies are checked at runtime, after all active plugins have loaded. */
+	public static function iranian_currency_available() {
+		return class_exists( 'WooCommerce' ) && function_exists( 'get_woocommerce_currency' )
+			&& in_array( get_woocommerce_currency(), array( 'IRT', 'IRR' ), true );
+	}
+
+	public static function qq_account_orders_available() {
+		return class_exists( 'WooCommerce' ) && function_exists( 'wc_get_orders' )
+			&& function_exists( 'qqa_account_sections' );
+	}
+
+	public static function iranian_currency_enabled() {
+		return self::iranian_currency_available() && (bool) self::get( 'woocommerce_iranian_currency', 1 );
+	}
+
+	public static function qq_account_orders_enabled() {
+		return self::qq_account_orders_available() && (bool) self::get( 'qq_account_orders', 1 );
 	}
 
 	public static function woocommerce_minimal_styles_enabled() {
@@ -135,6 +156,8 @@ class EHK_Settings {
 					'elementor_cache_toolbar' => 1,
 					'woocommerce_minimal_styles' => 0,
 					'woocommerce_test_gateway' => 0,
+					'woocommerce_iranian_currency' => 1,
+					'qq_account_orders' => 1,
 					'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 					'woocommerce_color_mode' => 'light',
 					'woocommerce_cart_button_text_enabled' => 0,
@@ -154,6 +177,13 @@ class EHK_Settings {
 			'elementor_cache_toolbar' => empty( $input['elementor_cache_toolbar'] ) ? 0 : 1,
 			'woocommerce_minimal_styles' => empty( $input['woocommerce_minimal_styles'] ) ? 0 : 1,
 			'woocommerce_test_gateway' => empty( $input['woocommerce_test_gateway'] ) ? 0 : 1,
+			// A hidden, unavailable control must not reset the owner's saved choice.
+			'woocommerce_iranian_currency' => self::iranian_currency_available()
+				? ( empty( $input['woocommerce_iranian_currency'] ) ? 0 : 1 )
+				: ( self::get( 'woocommerce_iranian_currency', 1 ) ? 1 : 0 ),
+			'qq_account_orders' => self::qq_account_orders_available()
+				? ( empty( $input['qq_account_orders'] ) ? 0 : 1 )
+				: ( self::get( 'qq_account_orders', 1 ) ? 1 : 0 ),
 			'woocommerce_primary_color' => self::normalize_primary_color( isset( $input['woocommerce_primary_color'] ) ? $input['woocommerce_primary_color'] : self::woocommerce_primary_color() ),
 			'woocommerce_color_mode' => isset( $input['woocommerce_color_mode'] ) && 'dark' === $input['woocommerce_color_mode'] ? 'dark' : 'light',
 			'woocommerce_cart_button_text_enabled' => empty( $input['woocommerce_cart_button_text_enabled'] ) ? 0 : 1,
@@ -339,6 +369,42 @@ class EHK_Settings {
 
 				</div>
 
+				<?php if ( self::iranian_currency_available() ) : ?>
+				<div class="ehk-card">
+					<div class="ehk-card-head">
+						<div>
+							<h2>اصلاح مکان تومان یا ریال در ووکامرس</h2>
+							<p>نمایش مبلغ در سمت راست و واحد تومان یا ریال با فاصله در سمت چپ مبلغ.</p>
+						</div>
+						<label class="ehk-switch">
+							<input type="checkbox" aria-label="اصلاح مکان تومان یا ریال در ووکامرس"
+								name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_iranian_currency]"
+								value="1" <?php checked( self::iranian_currency_enabled() ); ?> />
+							<span class="ehk-slider" aria-hidden="true"></span>
+						</label>
+					</div>
+					<p class="ehk-note">پیش‌فرض روشن؛ فقط با ووکامرس فعال و واحد پول <code>IRT</code> یا <code>IRR</code> نمایش داده و اجرا می‌شود. خاموش‌کردن، قالب قیمت تنظیم‌شده در ووکامرس را برمی‌گرداند. مبلغ، واحد پول و تنظیم ذخیره‌شده ووکامرس تغییر نمی‌کنند.</p>
+				</div>
+				<?php endif; ?>
+
+				<?php if ( self::qq_account_orders_available() ) : ?>
+				<div class="ehk-card">
+					<div class="ehk-card-head">
+						<div>
+							<h2>نمایش سفارش در QQ Account</h2>
+							<p>افزودن «سفارش‌های من» به حساب کاربری، همراه اقلام خرید، جزئیات و اطلاعات ارسال.</p>
+						</div>
+						<label class="ehk-switch">
+							<input type="checkbox" aria-label="نمایش سفارش در QQ Account"
+								name="<?php echo esc_attr( self::OPTION ); ?>[qq_account_orders]"
+								value="1" <?php checked( self::qq_account_orders_enabled() ); ?> />
+							<span class="ehk-slider" aria-hidden="true"></span>
+						</label>
+					</div>
+					<p class="ehk-note">پیش‌فرض روشن؛ فقط با فعال‌بودن هم‌زمان ووکامرس و QQ Account نمایش داده و اجرا می‌شود. هر کاربر فقط سفارش‌های خودش را می‌بیند. پرداخت موفق مشتری واردشده، پس از بررسی مالکیت و کلید سفارش، به جزئیات همان سفارش هدایت می‌شود. با خاموش‌کردن، تب و انتقال غیرفعال می‌شوند و صفحه دریافت سفارش ووکامرس باقی می‌ماند.</p>
+				</div>
+				<?php endif; ?>
+
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 				<div class="ehk-card">
 					<div class="ehk-card-head">
@@ -401,3 +467,4 @@ class EHK_Settings {
 		<?php
 	}
 }
+

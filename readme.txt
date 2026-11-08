@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.16
+Stable tag: 1.1.17
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -128,6 +128,13 @@ After installing Elementor Helper Kit, deactivate the old standalone "Elementor 
 
 == Changelog ==
 
+= 1.1.17 =
+- Add independent default-ON settings for WooCommerce IRT/IRR amount-before-currency output and QQ Account WooCommerce orders. Show controls only when their dependencies are available; preserve saved OFF values while controls are hidden.
+- Move the owner-only paginated order list, private item/shipping details, Jalali localization and verified paid-order redirect from Prince Elementor into the helper, with plugin-owned assets and no theme dependencies.
+- Follow the configured QQ Account page permalink and retain the existing one-time confirmation markers. Retire legacy Prince hooks during staggered updates.
+- Update helper before Prince Elementor 1.10.10. Perfume Suite bottle-price code is unchanged.
+
+
 = 1.1.16 =
 - Add a separate, default-OFF WooCommerce Admin Test Gateway toggle under Settings > Elementor Helper Kit (shown only while WooCommerce is active).
 - Register an actual classic WooCommerce payment method available exclusively to logged-in site administrators with manage_options. The same authorization is enforced at checkout validation and payment processing, not just via a hidden UI.
@@ -228,3 +235,4 @@ After installing Elementor Helper Kit, deactivate the old standalone "Elementor 
 - Default-on frontend Admin Bar switch.
 - Default-on Elementor Cache shortcut in the wp-admin toolbar.
 - Added native WordPress update checks and package downloads from the public GitHub main branch.
+

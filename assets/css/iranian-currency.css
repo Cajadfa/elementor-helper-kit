@@ -1,0 +1,18 @@
+/* wc_price supplies amount, space, symbol. Keep that order in RTL layouts.
+ * This stylesheet is loaded only for the enabled IRT/IRR correction.
+ * No bottle-specific selectors, floats, currency conversion or DOM rewrites.
+ */
+body.ehk-iranian-currency .woocommerce-Price-amount.amount bdi {
+	display: inline-flex !important;
+	flex-direction: row !important;
+	direction: rtl !important;
+	unicode-bidi: isolate !important;
+	align-items: baseline;
+	white-space: nowrap;
+}
+body.ehk-iranian-currency .woocommerce-Price-amount .woocommerce-Price-currencySymbol {
+	float: none !important;
+	position: static !important;
+	direction: rtl !important;
+	unicode-bidi: isolate !important;
+}
