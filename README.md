@@ -2,7 +2,7 @@
 
 A lightweight WordPress helper plugin for Elementor development and day-to-day administration.
 
-**Current version:** `1.1.17`
+**Current version:** `1.1.18`
 **Requires WordPress:** 6.0+  
 **Requires PHP:** 7.4+  
 **Update source:** public GitHub repository (`main` branch)
@@ -211,3 +211,32 @@ php tests/account-orders-contract.php
 php tests/order-received-redirect-contract.php
 node tests/account-orders-ui.test.js
 ```
+
+
+## Recreate classic WooCommerce pages (1.1.18)
+
+With WooCommerce active, **Settings → Elementor Helper Kit** includes a separate **ایجاد مجدد برگه‌های فروشگاه** button. This is an explicit administrator POST action protected by a nonce. It does not run during installation, plugin updates or ordinary settings saves.
+
+| New page slug | Page content | WooCommerce option |
+| --- | --- | --- |
+| `cart` | `[woocommerce_cart]` | `woocommerce_cart_page_id` |
+| `checkout` | `[woocommerce_checkout]` | `woocommerce_checkout_page_id` |
+| `my-account` | `[woocommerce_my_account]` | `woocommerce_myaccount_page_id` |
+
+Each new page is published at the site root using the default WordPress page template and the classic shortcode, with no Cart/Checkout Blocks or Elementor template assignment. These shortcodes let WooCommerce render the appropriate classic content; its own internal shortcode templates and hooks remain intact.
+
+The old **currently assigned** three pages are moved to Trash with their existing content retained, even if normal WordPress Trash is disabled. Their canonical slugs are released before the replacements are published and selected in WooCommerce. The main Shop page, products, orders and QQ Account page are not replaced. A shortcode page is a new page ID: custom menus or third-party links stored by old page ID may need to be reselected, while links using the three canonical URLs remain valid.
+
+The tool first checks permissions, protected/shared pages and unrelated pages occupying the requested slugs. It prepares all new drafts before retiring any old page, prevents concurrent rebuilds, verifies exact final slugs and WooCommerce assignments, and rolls back fresh pages/old statuses/slugs/settings if an operation fails. It reports whether rollback completed. If a requested slug belongs to an unrelated page, or a WooCommerce assignment shares a page with QQ Account, the home/blog/privacy/terms or the Shop page, resolve the overlap before retrying. After success it clears WooCommerce's excluded-URI cache and softly refreshes rewrite rules.
+
+This action has its own form and does not save unsaved switches in the settings form above it.
+
+## Optional My Account → QQ Account redirect
+
+**انتقال مای اکانت ووکامرس به QQ Account** is **OFF by default** and shown only while both WooCommerce and QQ Account are active. Its saved key is `woocommerce_qq_myaccount_redirect` in `ehk_settings`. A hidden option retains its previous choice.
+
+When enabled, a frontend GET to WooCommerce's assigned My Account page redirects with HTTP 302 to the published `qqa_account_page_id` permalink. If that assignment is invalid, a published `/account/` page is used when present. No valid target means no redirect. Site subdirectories are retained. QQ Account handles its own login requirements for guests. The feature is independent of the orders integration switch and never overwrites the WooCommerce My Account assignment.
+
+The QQ page itself is never redirected, preventing loops. Account form POSTs and WooCommerce `lost-password` / `customer-logout` endpoints keep their normal behavior. If the helper orders integration is enabled, WooCommerce `orders` and `view-order` links map to the QQ orders section; order details still enforce customer ownership on the server.
+
+Implementation: `includes/class-ehk-woocommerce-pages.php`. Focused check: `php tests/woocommerce-pages-contract.php`; append `no-trash` to verify the Trash-disabled fallback.

@@ -26,6 +26,7 @@ class EHK_Settings {
 			'woocommerce_test_gateway' => 0,
 			'woocommerce_iranian_currency' => 1,
 			'qq_account_orders' => 1,
+			'woocommerce_qq_myaccount_redirect' => 0,
 			'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 			'woocommerce_color_mode'   => 'light',
 			'woocommerce_cart_button_text_enabled' => 0,
@@ -89,6 +90,10 @@ class EHK_Settings {
 
 	public static function qq_account_orders_enabled() {
 		return self::qq_account_orders_available() && (bool) self::get( 'qq_account_orders', 1 );
+	}
+
+	public static function qq_myaccount_redirect_enabled() {
+		return self::qq_account_orders_available() && (bool) self::get( 'woocommerce_qq_myaccount_redirect', 0 );
 	}
 
 	public static function woocommerce_minimal_styles_enabled() {
@@ -158,6 +163,7 @@ class EHK_Settings {
 					'woocommerce_test_gateway' => 0,
 					'woocommerce_iranian_currency' => 1,
 					'qq_account_orders' => 1,
+					'woocommerce_qq_myaccount_redirect' => 0,
 					'woocommerce_primary_color' => self::DEFAULT_WC_PRIMARY,
 					'woocommerce_color_mode' => 'light',
 					'woocommerce_cart_button_text_enabled' => 0,
@@ -184,6 +190,9 @@ class EHK_Settings {
 			'qq_account_orders' => self::qq_account_orders_available()
 				? ( empty( $input['qq_account_orders'] ) ? 0 : 1 )
 				: ( self::get( 'qq_account_orders', 1 ) ? 1 : 0 ),
+			'woocommerce_qq_myaccount_redirect' => self::qq_account_orders_available()
+				? ( empty( $input['woocommerce_qq_myaccount_redirect'] ) ? 0 : 1 )
+				: ( self::get( 'woocommerce_qq_myaccount_redirect', 0 ) ? 1 : 0 ),
 			'woocommerce_primary_color' => self::normalize_primary_color( isset( $input['woocommerce_primary_color'] ) ? $input['woocommerce_primary_color'] : self::woocommerce_primary_color() ),
 			'woocommerce_color_mode' => isset( $input['woocommerce_color_mode'] ) && 'dark' === $input['woocommerce_color_mode'] ? 'dark' : 'light',
 			'woocommerce_cart_button_text_enabled' => empty( $input['woocommerce_cart_button_text_enabled'] ) ? 0 : 1,
@@ -405,6 +414,24 @@ class EHK_Settings {
 				</div>
 				<?php endif; ?>
 
+				<?php if ( self::qq_account_orders_available() ) : ?>
+				<div class="ehk-card">
+					<div class="ehk-card-head">
+						<div>
+							<h2>انتقال مای اکانت ووکامرس به QQ Account</h2>
+							<p>هدایت بازدیدکنندگان برگه <code>my-account</code> به برگه حساب کاربری تنظیم‌شده در QQ Account.</p>
+						</div>
+						<label class="ehk-switch">
+							<input type="checkbox" aria-label="انتقال مای اکانت ووکامرس به QQ Account"
+								name="<?php echo esc_attr( self::OPTION ); ?>[woocommerce_qq_myaccount_redirect]"
+								value="1" <?php checked( self::qq_myaccount_redirect_enabled() ); ?> />
+							<span class="ehk-slider" aria-hidden="true"></span>
+						</label>
+					</div>
+					<p class="ehk-note">پیش‌فرض خاموش؛ فقط با فعال‌بودن هم‌زمان ووکامرس و QQ Account اجرا می‌شود. اگر برگه حساب کیوکیو منتشر نشده باشد، انتقالی انجام نمی‌شود. لینک‌های بازیابی رمز و خروج ووکامرس همچنان کار می‌کنند.</p>
+				</div>
+				<?php endif; ?>
+
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 				<div class="ehk-card">
 					<div class="ehk-card-head">
@@ -434,6 +461,7 @@ class EHK_Settings {
 
 				<?php submit_button( 'ذخیره تنظیمات' ); ?>
 			</form>
+			<?php EHK_WooCommerce_Pages::render_tool(); ?>
 		</div>
 
 		<style>

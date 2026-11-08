@@ -3,7 +3,7 @@ Contributors: sajad
 Tags: elementor, json, editor, animation, transition, reduced motion, css, admin bar, cache, github updater
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.1.17
+Stable tag: 1.1.18
 License: GPLv2 or later
 
 A development and administration helper kit for Elementor sites with native public-GitHub updates.
@@ -127,6 +127,12 @@ The JSON editor intentionally keeps using the previous _eje_backups meta key, so
 After installing Elementor Helper Kit, deactivate the old standalone "Elementor JSON Editor" and "Force Full Motion" plugins to avoid duplicate behavior.
 
 == Changelog ==
+
+= 1.1.18 =
+- Add the explicit admin-only "ایجاد مجدد برگه‌های فروشگاه" tool to rebuild Cart, Checkout and My Account with classic shortcodes, exact cart/checkout/my-account slugs and default page templates, and assign their new IDs to WooCommerce.
+- Retain replaced page content in Trash; protect unrelated slug occupants and shared QQ/Shop/home/privacy/terms pages. Prepare drafts first and roll back on failed publishing or assignments. No page changes occur automatically on update or settings save.
+- Add an independent default-OFF My Account to QQ Account redirect toggle, visible with both plugins active. Follow the configured published QQ page, avoid loops, and preserve Woo password-reset/logout endpoints and form POSTs.
+
 
 = 1.1.17 =
 - Add independent default-ON settings for WooCommerce IRT/IRR amount-before-currency output and QQ Account WooCommerce orders. Show controls only when their dependencies are available; preserve saved OFF values while controls are hidden.
